@@ -2,7 +2,9 @@ from config import app
 
 
 
-
+app.route('/')
+def root_route():
+    return "Hello from Root!"
 
 
 

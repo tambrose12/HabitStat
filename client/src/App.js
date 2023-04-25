@@ -1,11 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router'
+import { Root, NotFound } from './components/landings'
+import { SignUp } from './components/auth';
+
 
 function App() {
   return (
     <Routes>
-      <Route index element={<h1>Landing Page</h1>} />
+      <Route index element={<Root />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
     // <div className="App">
     //   <header className="App-header">
