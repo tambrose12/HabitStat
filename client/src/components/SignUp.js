@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Root } from "./landings";
 
 
 function SignUp({ onLogin }) {
@@ -7,6 +9,8 @@ function SignUp({ onLogin }) {
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate()
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -25,12 +29,20 @@ function SignUp({ onLogin }) {
         }).then((r) => {
             setIsLoading(false);
             if (r.ok) {
-                r.json().then((user) => onLogin(user));
+                r.json().then((user) => {
+                    onLogin(user)
+                });
             } else {
                 r.json().then((err) => setErrors(err.errors));
             }
         });
+
+        navigate('/userdash')
     }
+
+
+
+
 
     return (
         <form onSubmit={handleSubmit}>

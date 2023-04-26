@@ -7,7 +7,7 @@ export const Root = ({ onLogout, user }) => {
         return (
             <>
                 <NavBar onLogout={onLogout} />
-                <h2>Welcome, {user.username}!</h2>;
+                {/* <h2>Welcome, {user.username}!</h2> */}
             </>
         )
     } else {
