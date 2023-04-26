@@ -1,33 +1,38 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router'
 import { Root, NotFound } from './components/landings'
-import { SignUp } from './components/auth';
+import SignUp from './components/SignUp'
+import Login from './components/Login';
 
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch("/check_session").then((response) => {
+      if (response.ok) {
+        response.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
+
+
+  function handleLogout() {
+    setUser(null);
+  }
+
+  console.log(`Hello ${user.username}!`)
+
   return (
     <Routes>
-      <Route index element={<Root />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route index element={<Root onLogout={handleLogout} user={user} />} />
+      <Route path="/login" element={<Login onLogin={setUser} />} />
+      <Route path="/signup" element={<SignUp onLogin={setUser} />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
 }
 

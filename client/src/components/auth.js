@@ -22,8 +22,10 @@ export const SignUp = () => {
                 username: <input onChange={updateForm} name="username" />
                 password: <input onChange={updateForm} name="password" />
                 confirm password: <input onChange={updateForm} name="confirm" />
+                <input type='Submit' />
             </form>
             <NavButton />
         </>
     )
 }
+
