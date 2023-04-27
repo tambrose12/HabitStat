@@ -6,8 +6,9 @@ export const Root = ({ onLogout, user }) => {
     if (user) {
         return (
             <>
-                <NavBar onLogout={onLogout} />
-                {/* <h2>Welcome, {user.username}!</h2> */}
+                {/* <NavBar onLogout={onLogout} /> */}
+                <h1>Welcome to Habitstat!</h1>
+                <Login />
             </>
         )
     } else {
