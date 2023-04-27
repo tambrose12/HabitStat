@@ -5,6 +5,8 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import validates, relationship
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
+import datetime
+
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
@@ -17,7 +19,7 @@ metadata = MetaData(naming_convention={
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-habitstats.user',
+    serialize_rules = ('-habitstats.user', '-_password_hash'
                        '-habitstats.user_id', '-habits.users')
 
     id = db.Column(db.Integer, primary_key=True)
@@ -45,6 +47,17 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<User {self.username}>'
 
+    @classmethod
+    def week_history(cls):
+        today = datetime.date.today()
+        start_date = today - datetime.timedelta(days=today.weekday())
+        end_date = start_date + datetime.timedelta(days=6)
+
+        week_history = HabitStat.query.filter_by(user_id=id).filter(
+            HabitStat.created_at.between(start_date, end_date)).all()
+
+        return week_history
+
 
 class Habit(db.Model, SerializerMixin):
     __tablename__ = 'habits'
@@ -53,9 +66,9 @@ class Habit(db.Model, SerializerMixin):
                        '-habitstats.habit_id', '-users.habits')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    category = db.Column(db.String)
-    goal = db.Column(db.Integer)
+    name = db.Column(db.String, nullable=False)
+    category = db.Column(db.String, nullable=False)
+    goal = db.Column(db.Integer, nullable=False)
 
     habitstats = relationship('HabitStat', backref='habit')
     users = association_proxy('habitstats', 'users')
@@ -65,11 +78,13 @@ class HabitStat(db.Model, SerializerMixin):
     __tablename__ = 'habitstats'
 
     serialize_rules = ('-habit.habitstats', '-habit.users',
-                       '-user.habitstats', '-user.habits')
+                       '-user')
 
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_at = db.Column(
+        db.DateTime, server_default=db.func.now(), nullable=False)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     amount = db.Column(db.Float, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    habit_id = db.Column(db.Integer, db.ForeignKey('habits.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    habit_id = db.Column(db.Integer, db.ForeignKey(
+        'habits.id'), nullable=False)
