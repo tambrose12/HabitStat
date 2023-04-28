@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { UserContext } from "./context/user";
 import { Navigate } from "react-router-dom";
-import NavBar from "./NavBar";
+import Charts from "./Charts";
 
-const UserDash = ({ user }) => {
+
+const UserDash = () => {
+	const { user } = useContext(UserContext)
 
 	if (!user) {
 		return <Navigate replace to='/login' />
 	} else {
+
 		return (
 			<div>
-				{/* <NavBar /> */}
 				<h2>Hello, {user.username}!</h2>
 				<p>Welcome to your Dashboard</p>
+				<Charts />
 			</div>
 		);
 	}

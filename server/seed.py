@@ -6,20 +6,18 @@ from models import db, User, Habit, HabitStat
 
 with app.app_context():
 
-    User.query.delete()
     Habit.query.delete()
-    HabitStat.query.delete()
 
     db.session.commit()
 
-    u1 = User(username='user')
-    u2 = User(username='billy')
+    # u1 = User(username='user')
+    # u2 = User(username='billy')
 
-    u1.password_hash = 'password'
-    u2.password_hash = 'password'
+    # u1.password_hash = 'password'
+    # u2.password_hash = 'password'
 
-    db.session.add_all([u1, u2])
-    db.session.commit()
+    # db.session.add_all([u1, u2])
+    # db.session.commit()
 
     # id = db.Column(db.Integer, primary_key=True)
     # name = db.Column(db.String)
@@ -38,24 +36,25 @@ with app.app_context():
                        category="exercise", goal=15)
     # Goal in Minutes
     meditate30 = Habit(name="30 Mintue Meditation",
-                       category="mental health", goal=30)
+                       category="meditation", goal=30)
     meditate15 = Habit(name="15 Minute Meditation",
-                       category="mental health", goal=15)
+                       category="meditation", goal=15)
     # Goal in Minutes
     read30 = Habit(name="30 Mintues Reading",
-                   category="mental health", goal=30)
-    read15 = Habit(name="15 Minute Reading", category="mental health", goal=15)
+                   category="reading", goal=30)
+    read15 = Habit(name="15 Minute Reading", category="reading", goal=15)
 
     # created_at = db.Column(db.DateTime, server_default=db.func.now())
     # updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     # amount = db.Column(db.Float, nullable=False)
     # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # habit_id = db.Column(db.Integer, db.ForeignKey('habits.id'))
-    hs1 = HabitStat(amount=5, user_id=2, habit_id=1)
+    # hs2 = HabitStat(amount=5, user_id=2, habit_id=6,
+    #                 created_at='2023-04-27 18:57:23')
 
-    db.session.add_all([water, shower, exercise30, exercise15,
-                       meditate30, meditate15, read30, read15])
-    db.session.commit()
+    # db.session.add_all([water, shower, exercise30, exercise15,
+    #                    meditate30, meditate15, read30, read15])
+    # db.session.commit()
 
-    db.session.add(hs1)
-    db.session.commit()
+    # db.session.add(hs2)
+    # db.session.commit()

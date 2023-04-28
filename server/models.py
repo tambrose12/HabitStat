@@ -20,7 +20,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     serialize_rules = ('-habitstats.user', '-_password_hash'
-                       '-habitstats.user_id', '-habits.users')
+                       '-habitstats.user_id', '-habits.users', 'week_history')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -47,13 +47,13 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<User {self.username}>'
 
-    @classmethod
-    def week_history(cls):
+    @property
+    def week_history(self):
         today = datetime.date.today()
         start_date = today - datetime.timedelta(days=today.weekday())
         end_date = start_date + datetime.timedelta(days=6)
 
-        week_history = HabitStat.query.filter_by(user_id=id).filter(
+        week_history = HabitStat.query.filter(
             HabitStat.created_at.between(start_date, end_date)).all()
 
         return week_history
