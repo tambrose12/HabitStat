@@ -20,7 +20,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     serialize_rules = ('-habitstats.user', '-_password_hash'
-                       '-habitstats.user_id', '-habits.users', 'week_history')
+                       '-habitstats.user_id', '-habits.users', 'week_history', 'habits')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -28,7 +28,7 @@ class User(db.Model, SerializerMixin):
     image = db.Column(db.String)
 
     habitstats = relationship('HabitStat', backref='user')
-    habits = association_proxy('habitstats', 'habits')
+    habits = association_proxy('habitstats', 'habit')
 
     @hybrid_property
     def password_hash(self):

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "./context/user";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import { Box } from "@mui/material";
 
 const Charts = () => {
 
@@ -17,25 +18,25 @@ const Charts = () => {
                 waterData[date] = 0;
             }
             waterData[date] += entry.amount;
-            console.log(waterData)
+
         } else if (entry.habit.category == "exercise") {
             const date = new Date(entry.created_at).toLocaleDateString();
             if (!exerciseData[date]) {
                 exerciseData[date] = 0;
             }
             exerciseData[date] += entry.amount;
-            console.log(exerciseData)
+
         } else if (entry.habit.category == "meditation") {
             const date = new Date(entry.created_at).toLocaleDateString();
             if (!meditationData[date]) {
                 meditationData[date] = 0;
             }
             meditationData[date] += entry.amount;
-            console.log(meditationData)
+
 
         }
     }
-    console.log(user.week_history)
+
 
 
     const waterChartData = {
@@ -68,7 +69,10 @@ const Charts = () => {
 
     return (
         <div>
-            <Line data={waterChartData} />
+            <Box>
+                <Line data={waterChartData} />
+            </Box>
+
             <Line data={exerciseChartData} />
         </div>
     )

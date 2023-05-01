@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 export default function NavButton({ path = '..', text = 'Back' }) {
     const navigate = useNavigate()
     return (
-        <button onClick={() => navigate(path)}>
+        <Button variant="outlined" onClick={() => navigate(path)}>
             {text}
-        </button>
+        </Button>
     )
 }

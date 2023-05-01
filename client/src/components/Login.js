@@ -1,6 +1,10 @@
 import { useContext, useState } from 'react'
 import NavButton from './NavButton'
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "./context/user";
+import Cookies from 'js-cookie'
+import { Button } from '@mui/material';
+
 
 
 const Login = ({ onLogin }) => {
@@ -12,6 +16,7 @@ const Login = ({ onLogin }) => {
 
     // const [user, setUser] = useContext(UserContext)
 
+    const { user, setUser } = useContext(UserContext)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -28,7 +33,8 @@ const Login = ({ onLogin }) => {
         })
             .then((r) => {
                 if (r.ok) {
-                    r.json().then((user) => onLogin(user));
+                    r.json().then((user) => setUser(user));
+                    Cookies.set('user', 'loginTrue', { expires: 7 })
                     navigate('/userdash')
                 } else {
                     r.json().then((err) => console.log(err));
@@ -40,7 +46,7 @@ const Login = ({ onLogin }) => {
     }
 
     return (
-        <>
+        <div className='Login'>
             <h2>LogIn</h2>
             <form onSubmit={handleSubmit}>
                 username:
@@ -63,13 +69,14 @@ const Login = ({ onLogin }) => {
                     value={password}
                 />
                 <br />
-                <button type='submit'>Log In</button>
+                <br />
+                <Button variant='outlined' type='submit'>Log In</Button>
             </form>
             <br />
             <h2>New to Habitstat?</h2>
             <h3>Create an Account for Free!</h3>
-            <NavButton path='/signup' text='Sign Up' />
-        </>
+            <NavButton variant='outlined' path='/signup' text='Sign Up' />
+        </div>
     )
 }
 

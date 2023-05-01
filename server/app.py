@@ -199,6 +199,38 @@ class UserById(Resource):
         user = User.query.filter_by(id=id).first()
         return make_response(user.to_dict(), 200)
 
+    def patch(self, id):
+        data = request.get_json()
+        user = User.query.filter_by(id=id).first()
+        if user == None:
+            return make_response({'error': 'u=User not found'}, 404)
+
+        for attr in data:
+            setattr(user, attr, data[attr])
+
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return make_response({'error': 'validation errors'}, 422)
+
+        response_dict = user.to_dict()
+
+        response = make_response(response_dict, 200)
+
+        return response
+
+    def delete(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user == None:
+            return make_response({'error': 'User not found'}, 404)
+
+        db.session.delete(user)
+        db.session.commit()
+
+        return make_response({'message': 'User Deleted'}, 201)
+
 
 api.add_resource(UserById, '/user/<int:id>')
 

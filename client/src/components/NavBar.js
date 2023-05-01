@@ -1,5 +1,22 @@
 import React, { useContext } from "react"
 import { UserContext } from "./context/user";
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiDrawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Link from '@mui/material/Link';
+import { Button } from "@mui/material";
+
 
 function NavBar({ onLogout }) {
     const { user, setUser } = useContext(UserContext)
@@ -7,17 +24,52 @@ function NavBar({ onLogout }) {
     function handleLogout() {
         fetch("/logout", {
             method: "DELETE",
-        }).then(() => onLogout());
+            // }).then(() => onLogout());
+        }).then(() => setUser());
     }
+
+
+    const mdTheme = createTheme();
 
     const renderHeader = () => {
         if (!user) {
-            return <h3>Habitstat</h3>
+            return (
+                <Toolbar sx={{
+                    pr: '24px', // keep right padding when drawer closed
+                }}>
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Habitstat Dashboard
+                    </Typography>
+
+                </Toolbar>
+            )
         } else {
             return (
                 <>
+
+                    <Toolbar sx={{
+                        pr: '24px', // keep right padding when drawer closed
+                    }}>
+                        <Typography
+                            component="h1"
+                            variant="h6"
+                            color="inherit"
+                            noWrap
+                            sx={{ flexGrow: 1 }}
+                        >
+                            {user.username}'s Habitstat Dashboard
+                        </Typography>
+                        <Button variant='contained' onClick={handleLogout}>Logout</Button>
+                    </Toolbar>
+
                     <h3>{user.username}'s Habitstat</h3>
-                    <button onClick={handleLogout}>Logout</button>
+
                 </>
             )
         }
@@ -27,8 +79,12 @@ function NavBar({ onLogout }) {
 
     return (
         <header>
-            <button onClick={handleLogout}>Logout</button>
-            <h3>{renderHeader}</h3>
+            <ThemeProvider theme={mdTheme}>
+
+                <Button variant='outlined' onClick={handleLogout}>Logout</Button>
+                {renderHeader}
+
+            </ThemeProvider>
         </header>
     );
 }
