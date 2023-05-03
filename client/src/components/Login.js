@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "./context/user";
 import Cookies from 'js-cookie'
 import { Button } from '@mui/material';
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -20,7 +21,7 @@ const Login = ({ onLogin }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -42,7 +43,10 @@ const Login = ({ onLogin }) => {
                 }
             });
 
-        navigate('/userdash')
+        // navigate('/userdash')
+        if (user) {
+            return <Navigate replace to="/userdash" />
+        }
 
     }
 
