@@ -83,14 +83,12 @@ const UserDash = ({ removeStat, stats }) => {
 
 
 			return (
-				<div>
-					<TableRow key={stat.id} sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
-						<TableCell> <button onClick={() => handleDelete(stat.id)}><DeleteIcon fontSize="small" /></button>  {stat.habit.name}</TableCell>
-						<TableCell align="right">{stat.habit.category}</TableCell>
-						<TableCell align="right">{stat.habit.goal} </TableCell>
-						<TableCell align="right" value={stat.amount}>{stat.amount} <button className='addBtn' onClick={() => handleModalOpen(stat)}><AddIcon /></button></TableCell>
-					</TableRow>
-				</div>
+				<TableRow key={stat.id} sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
+					<TableCell> <button onClick={() => handleDelete(stat.id)}><DeleteIcon fontSize="small" /></button>  {stat.habit.name}</TableCell>
+					<TableCell align="right">{stat.habit.category}</TableCell>
+					<TableCell align="right">{stat.habit.goal} </TableCell>
+					<TableCell align="right" value={stat.amount}>{stat.amount} <button className='addBtn' onClick={() => handleModalOpen(stat)}><AddIcon /></button></TableCell>
+				</TableRow>
 			)
 		})
 
@@ -134,10 +132,10 @@ const UserDash = ({ removeStat, stats }) => {
 						<Table sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
 							<TableHead>
 								<TableRow>
-									<TableCell>Habit</TableCell>
-									<TableCell>Category</TableCell>
-									<TableCell>Goal</TableCell>
-									<TableCell>Progress</TableCell>
+									<TableCell align="right">Habit</TableCell>
+									<TableCell align="right">Category</TableCell>
+									<TableCell align="right">Goal</TableCell>
+									<TableCell align="right">Progress</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
