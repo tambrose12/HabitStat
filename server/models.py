@@ -88,3 +88,11 @@ class HabitStat(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     habit_id = db.Column(db.Integer, db.ForeignKey(
         'habits.id'), nullable=False)
+
+    @validates('amount')
+    def validate_amount(self, key, amt):
+        if type(amt) is not int:
+            raise TypeError('Amount must be a number.')
+        elif amt < 1 or amt > 99:
+            raise ValueError("Invalid number")
+        return amt

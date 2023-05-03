@@ -154,18 +154,25 @@ class HabitStats(Resource):
 
     def post(self):
         data = request.get_json()
-        new_stat = HabitStat(
-            amount=data['amount'], user_id=data['user_id'], habit_id=data['habit_id'])
 
-        if new_stat.amount == None or new_stat.amount == "":
-            return make_response({"error": "400: Validation error."}, 400)
-        elif new_stat.user_id == None or new_stat.user_id == "":
-            return make_response({"error": "400: Validation error."}, 400)
-        elif new_stat.habit_id == None or new_stat.habit_id == "":
-            return make_response({"error": "400: Validation error."}, 400)
-        else:
-            db.session.add(new_stat)
-            db.session.commit()
+        try:
+            new_stat = HabitStat(
+                amount=data['amount'], user_id=data['user_id'], habit_id=data['habit_id'])
+
+            if new_stat.amount == None or new_stat.amount == "":
+                return make_response({"error": "400: Validation error."}, 400)
+            elif new_stat.user_id == None or new_stat.user_id == "":
+                return make_response({"error": "400: Validation error."}, 400)
+            elif new_stat.habit_id == None or new_stat.habit_id == "":
+                return make_response({"error": "400: Validation error."}, 400)
+            else:
+                db.session.add(new_stat)
+                db.session.commit()
+
+        except ValueError:
+            db.session.rollback()
+            return make_response({'error': 'ValueError'}, 422)
+
         return make_response(new_stat.to_dict(), 201)
 
 
@@ -189,9 +196,10 @@ class HabitStatsById(Resource):
 
     def patch(self, id):
         data = request.get_json()
+
         stat = HabitStat.query.filter_by(id=id).first()
         if stat == None:
-            return make_response({'error': 'User not found'}, 404)
+            return make_response({'error': 'Stat not found'}, 404)
 
         for attr in data:
             setattr(stat, attr, data[attr])
@@ -199,9 +207,9 @@ class HabitStatsById(Resource):
         try:
             db.session.add(stat)
             db.session.commit()
-        except IntegrityError:
+        except ValueError:
             db.session.rollback()
-            return make_response({'error': 'validation errors'}, 422)
+            return make_response({'error': 'ValueError'}, 422)
 
         response_dict = stat.to_dict()
 
