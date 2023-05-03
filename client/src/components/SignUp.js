@@ -1,20 +1,33 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Root } from "./landings";
+import { Modal } from "@mui/material";
+import { Button } from "@mui/material";
 
 
 function SignUp({ onLogin }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    // const [modalOpen, setModalOpen] = useState(false);
 
     const navigate = useNavigate()
 
+    function handleErrors(response) {
+        if (!response.ok) {
+            navigate("/signup")
+            window.alert("Username taken, please try another username.")
+            // setModalOpen(true)
+
+            navigate("/signup")
+            throw Error(response.statusText)
+        }
+        return response.json();
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
-        setErrors([]);
         setIsLoading(true);
         fetch("/signup", {
             method: "POST",
@@ -26,16 +39,9 @@ function SignUp({ onLogin }) {
                 password,
                 password_confirmation: passwordConfirmation,
             }),
-        }).then((r) => {
-            setIsLoading(false);
-            if (r.ok) {
-                r.json().then((user) => {
-                    onLogin(user)
-                });
-            } else {
-                r.json().then((err) => setErrors(err.errors));
-            }
-        });
+        })
+            .then(handleErrors)
+            .then(setIsLoading(false))
 
         navigate('/userdash')
     }
@@ -80,6 +86,20 @@ function SignUp({ onLogin }) {
 
                 <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
             </form>
+            {/* 
+            <Modal
+                isOpen={modalOpen}
+                onRequestClose={() => setModalOpen(false)}
+            >
+                <div>
+                    <h2>Username taken. Please try another username.</h2>
+                    <Button onClick={() => setModalOpen(false)} variant="outlined">
+                        Back to SignUp
+                    </Button>
+
+                </div>
+            </Modal> */}
+
         </div>
     );
 }

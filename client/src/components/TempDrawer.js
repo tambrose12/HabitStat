@@ -31,7 +31,7 @@ export default function TempDrawer() {
             method: "DELETE",
         }).then(() => {
             setUser(null)
-            document.cookie.remove('session')
+            // document.cookie.remove('session')
         });
 
     }
