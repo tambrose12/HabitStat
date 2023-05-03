@@ -78,7 +78,7 @@ function App() {
         <Route path="/userdash" element={<UserDash removeStat={removeStatFromState} />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/habits" element={<HabitsList habitCard={habitCard} />} />
-        <Route path="/userstats" element={<StatsPage />} />
+        <Route path="/userstats" element={<StatsPage setStats={setStats} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

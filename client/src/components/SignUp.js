@@ -45,46 +45,42 @@ function SignUp({ onLogin }) {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username</label>
-            <input
-                type="text"
-                id="username"
-                autoComplete="off"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
+        <div className='Login'>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="username">Username</label>
+                <br />
+                <input
+                    type="text"
+                    id="username"
+                    autoComplete="off"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <br />
+                <label htmlFor="password">Password</label>
+                <br />
+                <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                />
+                <br />
+                <label htmlFor="password">Password Confirmation</label>
+                <br />
+                <input
+                    type="password"
+                    id="password_confirmation"
+                    value={passwordConfirmation}
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    autoComplete="current-password"
+                />
+                <br />
 
-            <label htmlFor="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
-            />
-
-            <label htmlFor="password">Password Confirmation</label>
-            <input
-                type="password"
-                id="password_confirmation"
-                value={passwordConfirmation}
-                onChange={(e) => setPasswordConfirmation(e.target.value)}
-                autoComplete="current-password"
-            />
-
-            {/* 
-        <label htmlFor="imageUrl">Profile Image</label>
-        <input
-          type="text"
-          id="imageUrl"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-        />
-       */}
-
-            <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
-        </form>
+                <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
+            </form>
+        </div>
     );
 }
 

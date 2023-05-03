@@ -7,28 +7,26 @@ import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { TableContainer, Table, TableBody, TableRow, TableHead, TableCell } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import Modal from "react-modal";
+import { Button } from "@mui/material";
 
 
 
 
-const UserDash = ({ removeStat }) => {
-	const { user } = useContext(UserContext)
+const UserDash = ({ removeStat, stats }) => {
+	const { user, setUser } = useContext(UserContext)
+	const [modalOpen, setModalOpen] = useState(false);
 
-	// const [newAmount, setNewAmount] = useState(0)
-	const [statId, setStatId] = useState('')
+
+	let habitStats = user.habitstats
+
+	const [newAmount, setNewAmount] = useState(user.habitstats.amount)
+
 
 
 	if (user === null) {
 		return <Navigate replace to='/login' />
 	} else {
-
-		// const renderUnits = () => {
-		// 	if (user.habits.name == "Water Intake") {
-		// 		return 'cups'
-		// 	} else if (user.habits.category == 'exercise') {
-		// 		return 'minutes'
-		// 	}
-		// }
 
 		const handleDelete = (id) => {
 			fetch(`/stats/${id}`, {
@@ -42,87 +40,113 @@ const UserDash = ({ removeStat }) => {
 
 
 
-		let habitStats = user.habitstats
-		console.log(habitStats)
+
+
 		let habitNames = habitStats.map(s => s.habit.name)
-		console.log(habitNames)
+
 		const uniqueStats = [...new Map(habitStats.map((h) => [h.name, h])).values()];
 
-		const addProgress = (e, id) => {
 
-			let newAmount = e.target.value += 1
-
-			fetch(`/stats/${id}`, {
-				method: 'PATCH',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					amount: newAmount
-				})
-			})
-				.then(r => r.json)
-				.then()
-
+		const handleChange = e => {
+			const { value } = e.target
+			setNewAmount(e.target.value)
 		}
 
+		// const addProgress = (e) => {
+		// 	e.preventDefault()
+
+		// 	fetch(`/stats/${stats.id}`, {
+		// 		method: 'PATCH',
+		// 		headers: { 'Content-Type': 'application/json' },
+		// 		body: JSON.stringify({
+		// 			amount: newAmount
+		// 		})
+		// 	})
+		// 		.then(r => r.json)
+		// 		.then(updatedStats => setUser({ ...user, user.habitstats }))
+
+		// }
+
 		const userHabitStats = habitStats.map((s) => {
-			// setNewAmount(s.amount)
 
 			return (
 				<TableRow key={s.id}>
 					<TableCell> <button onClick={() => handleDelete(s.id)}><DeleteIcon fontSize="small" /></button>  {s.habit.name}</TableCell>
 					<TableCell>{s.habit.category}</TableCell>
 					<TableCell>{s.habit.goal} </TableCell>
-					<TableCell align="right" value={s.amount}>{s.amount} <button className='addBtn' onClick={() => addProgress(s.id)}><AddIcon /></button></TableCell>
+					<TableCell align="right" value={s.amount}>{s.amount} <button className='addBtn' onClick={() => setModalOpen(true)}><AddIcon /></button></TableCell>
 				</TableRow>
 			)
 		})
 
 
-		// let habits = user.habits
+		console.log(habitStats)
+		if (habitStats === null) {
+			return (
+				<div>
+					<h2>Hello, {user.username}!</h2>
+					<img className="userImage" src={user.image} alt={user.username} />
+					<h3>Check out the menu and start adding some Habit Goals to your list!</h3>
+				</div>
+			)
+		} else if (habitStats === []) {
+			return (
+				<div>
+					<h2>Hello, {user.username}!</h2>
+					<img className="userImage" src={user.image} alt={user.username} />
+					<h3>Check out the menu and start adding some Habit Goals to your list!</h3>
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					<TempDrawer />
+					<h2>Hello, {user.username}!</h2>
+					<img className="userImage" src={user.image} alt={user.username} />
+					<p>Welcome to your Dashboard</p>
+					<h3>Your Habit Goals:</h3>
+					<TableContainer>
+						<Table sx={{ maxWidth: 600 }} size="small" aria-label="a dense table">
+							<TableHead>
+								<TableRow>
+									<TableCell>Habit</TableCell>
+									<TableCell>Category</TableCell>
+									<TableCell>Goal</TableCell>
+									<TableCell>Progress</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{userHabitStats}
+							</TableBody>
+						</Table>
+					</TableContainer>
+					<br />
+					<Modal
+						isOpen={modalOpen}
+						onRequestClose={() => setModalOpen(false)}
 
-		// const uniqueHabits = [...new Map(habits.map((h) => [h.name, h])).values()];
-		// const today = new Date()
-		// let currentDate = today.toJSON().slice(0, 10)
+					>
+						<div className='Login'>
+							{/* onSubmit={addProgress} */}
+							<form >
+								<label for="car_number"> Enter Progress: </label>
+								<br />
+								<input onChange={handleChange} type="number" name="amount" value={newAmount} />
+								<br />
+								<Button variant='outlined' type="submit">Submit Progress</Button>
+							</form>
+							<br />
+							<Button variant='outlined' onClick={() => setModalOpen(false)} >
+								Close Update Form
+							</Button>
+						</div>
+					</Modal>
 
-		// const userHabits = uniqueHabits.map((habit) => {
-
-		// 	return (
-		// 		<TableRow key={habit.id}>
-		// 			<TableCell> <button onClick={() => handleDelete()}><DeleteIcon fontSize="small" /></button>  {habit.name}</TableCell>
-		// 			<TableCell>{habit.category}</TableCell>
-		// 			<TableCell>{habit.goal} </TableCell>
-		// 			{/* <TableCell>{todayStats.amount}</TableCell> */}
-		// 		</TableRow>
-		// 	)
-		// })
-
-		return (
-			<div>
-				<TempDrawer />
-				<h2>Hello, {user.username}!</h2>
-				<img className="userImage" src={user.image} alt={user.username} />
-				<p>Welcome to your Dashboard</p>
-				<h3>Your Habit Goals:</h3>
-				<TableContainer>
-					<Table sx={{ maxWidth: 600 }} size="small" aria-label="a dense table">
-						<TableHead>
-							<TableRow>
-								<TableCell>Habit</TableCell>
-								<TableCell>Category</TableCell>
-								<TableCell>Goal</TableCell>
-								<TableCell>Progress</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{userHabitStats}
-						</TableBody>
-					</Table>
-				</TableContainer>
-				<br />
+				</div>
+			);
+		}
 
 
-			</div>
-		);
 	}
 };
 
