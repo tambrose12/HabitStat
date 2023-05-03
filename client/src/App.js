@@ -13,6 +13,7 @@ import HabitsCard from './components/HabitsCard'
 import HabitsList from './components/HabitsList'
 import Cookies from 'js-cookie'
 import UserProfile from './components/UserProfile';
+import StatsPage from './components/StatsPage';
 
 
 function App() {
@@ -21,14 +22,14 @@ function App() {
   const [habits, setHabits] = useState([])
   const [stats, setStats] = useState([])
 
-  useEffect(() => {
-    fetch("/check_session").then((response) => {
-      if (response.ok) {
-        response.json().then((user) => setUser(user));
-      }
-    });
+  // useEffect(() => {
+  //   fetch("/check_session").then((response) => {
+  //     if (response.ok) {
+  //       response.json().then((user) => setUser(user));
+  //     }
+  //   });
 
-  }, []);
+  // }, []);
 
   useEffect(() => {
     fetch("/habits")
@@ -77,6 +78,7 @@ function App() {
         <Route path="/userdash" element={<UserDash removeStat={removeStatFromState} />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/habits" element={<HabitsList habitCard={habitCard} />} />
+        <Route path="/userstats" element={<StatsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

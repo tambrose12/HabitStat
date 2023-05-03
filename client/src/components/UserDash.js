@@ -18,7 +18,7 @@ const UserDash = ({ removeStat }) => {
 	const [statId, setStatId] = useState('')
 
 
-	if (user == null) {
+	if (user === null) {
 		return <Navigate replace to='/login' />
 	} else {
 
@@ -67,14 +67,12 @@ const UserDash = ({ removeStat }) => {
 		const userHabitStats = habitStats.map((s) => {
 			// setNewAmount(s.amount)
 
-
-
 			return (
 				<TableRow key={s.id}>
 					<TableCell> <button onClick={() => handleDelete(s.id)}><DeleteIcon fontSize="small" /></button>  {s.habit.name}</TableCell>
 					<TableCell>{s.habit.category}</TableCell>
 					<TableCell>{s.habit.goal} </TableCell>
-					<TableCell value={s.amount}>{s.amount} <button className='addBtn' onClick={() => addProgress(s.id)}><AddIcon /></button></TableCell>
+					<TableCell align="right" value={s.amount}>{s.amount} <button className='addBtn' onClick={() => addProgress(s.id)}><AddIcon /></button></TableCell>
 				</TableRow>
 			)
 		})
@@ -122,7 +120,7 @@ const UserDash = ({ removeStat }) => {
 				</TableContainer>
 				<br />
 
-				<Charts />
+
 			</div>
 		);
 	}

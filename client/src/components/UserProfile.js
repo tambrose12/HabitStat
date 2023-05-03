@@ -29,7 +29,7 @@ const UserProfile = () => {
             .then(r => r.json())
             .then(updatedUser => setUser(updatedUser))
         window.alert("Profile Updated")
-        e.target.reset()
+        // e.target.reset()
     }
 
     return (

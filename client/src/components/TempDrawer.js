@@ -22,13 +22,16 @@ export default function TempDrawer() {
     const navigate = useNavigate()
     const { user, setUser } = useContext(UserContext)
 
+    // let removing = browser.cookies.remove(
+    //     {}
+    //   )
+
     function handleLogout() {
         fetch("/logout", {
             method: "DELETE",
-            // }).then(() => onLogout());
         }).then(() => {
-            setUser()
-            Cookies.remove('user')
+            setUser(null)
+            document.cookie.remove('session')
         });
 
     }
@@ -83,7 +86,7 @@ export default function TempDrawer() {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => navigate('/userstats')}>
                         <ListItemIcon>
                             <AssessmentIcon />
                         </ListItemIcon>
@@ -117,7 +120,7 @@ export default function TempDrawer() {
         <div>
             {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
             <React.Fragment key='left'>
-                <Button onClick={toggleDrawer('left', true)}>MENU</Button>
+                <Button onClick={toggleDrawer('left', true)} variant='outlined' sx={{ marginTop: 1.5 }}>MENU</Button>
                 <Drawer
                     anchor='left'
                     open={state['left']}

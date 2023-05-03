@@ -33,15 +33,16 @@ const Login = ({ onLogin }) => {
         })
             .then((r) => {
                 if (r.ok) {
-                    r.json().then((user) => setUser(user));
-                    Cookies.set('user', user.id, { expires: 7 })
-                    navigate('/userdash')
+                    r.json().then((user) => setUser(user))
+                    // Cookies.set('user', user.id, { expires: 7 })
+
                 } else {
                     r.json().then((err) => console.log(err));
                     window.alert("Invalid username or password")
                 }
             });
 
+        navigate('/userdash')
 
     }
 
