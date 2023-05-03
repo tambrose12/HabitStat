@@ -36,6 +36,8 @@ const UserProfile = () => {
         <div>
             <TempDrawer />
             <div className="formDiv">
+                <img className="userImage" src={user.image} alt={user.username} />
+                <br />
                 <form onSubmit={handleSubmit} >
                     <label for="username"> Username: </label>
                     <br />
