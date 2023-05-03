@@ -132,7 +132,7 @@ const UserDash = ({ removeStat, stats }) => {
 						<Table sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
 							<TableHead>
 								<TableRow>
-									<TableCell align="right">Habit</TableCell>
+									<TableCell>Habit</TableCell>
 									<TableCell align="right">Category</TableCell>
 									<TableCell align="right">Goal</TableCell>
 									<TableCell align="right">Progress</TableCell>
