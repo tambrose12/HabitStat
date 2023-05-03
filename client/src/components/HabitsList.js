@@ -7,9 +7,11 @@ const HabitsList = ({ habitCard }) => {
 
 
     return (
-        <div>
+        <div >
             <TempDrawer />
-            {habitCard}
+            <div className="habitList">
+                {habitCard}
+            </div>
         </div>
     )
 

@@ -69,11 +69,13 @@ const Charts = () => {
 
     return (
         <div>
-            <Box>
-                <Line data={waterChartData} />
-            </Box>
+
+            <Line data={waterChartData} />
+
 
             <Line data={exerciseChartData} />
+
+
         </div>
     )
 

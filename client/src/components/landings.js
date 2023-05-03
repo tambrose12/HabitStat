@@ -1,34 +1,20 @@
 import NavButton from './NavButton'
 import Login from './Login'
 import NavBar from './NavBar'
+import UserDash from './UserDash'
 
 export const Root = ({ onLogout, user }) => {
     if (user) {
         return (
             <>
                 {/* <NavBar onLogout={onLogout} /> */}
-                <h1>Welcome to Habitstat!</h1>
-                <Login />
+
+                <UserDash />
             </>
         )
     } else {
         return <Login />;
     }
-
-    // return (
-    //     <div>
-    //         <NavBar onLogout={onLogout} />
-    //         <h1>Landing Page</h1>
-    //         <Login />
-
-
-
-    //         <br />
-    //         <NavButton path="/signup" text="Sign Up" />
-
-
-    //     </div>
-    // )
 }
 
 export const NotFound = () => {

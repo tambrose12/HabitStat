@@ -24,5 +24,28 @@ code {
 } */
 
 body {
-  margin: 50px;
+
+  margin-left: 250px;
+  margin-right: 200px;
+}
+
+.addBtn {
+  border: none;
+  background: none;
+  margin-left: 15px;
+  font-size: small;
+  color: #0096FF;
+}
+
+.habitList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.userImage {
+  height: 150px;
+  width: 150px;
+  justify-content: center;
+  object-fit: cover;
+  border-radius: 50%;
 }

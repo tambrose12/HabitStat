@@ -77,26 +77,22 @@ class Signup(Resource):
 
         user = User(
             username=username,
-            image='https://mystiquemedicalspa.com/wp-content/uploads/2014/11/bigstock-159411362-Copy-1.jpg'
+            image='https://images.unsplash.com/photo-1601247387431-7966d811f30b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80'
         )
+        # Photo by Joshua J. Cotten on Unsplash
 
         # the setter will encrypt this
         user.password_hash = password
 
-        print('first')
-
         try:
-            print('here!')
             db.session.add(user)
             db.session.commit()
 
             session['user_id'] = user.id
 
-            print(user.to_dict())
             return user.to_dict(), 201
 
         except IntegrityError:
-            print('no, here!')
             return {'error': '422 Unprocessable Entity'}, 422
 
 
@@ -105,7 +101,7 @@ api.add_resource(Signup, '/signup', endpoint='signup')
 
 class Habits(Resource):
     def get(self):
-        habits = [h.to_dict(only=('id', 'name', 'category', 'goal'))
+        habits = [h.to_dict(only=('id', 'name', 'category', 'goal', 'users'))
                   for h in Habit.query.all()]
         return make_response(habits, 200)
 
@@ -234,44 +230,6 @@ class UserById(Resource):
 
 api.add_resource(UserById, '/user/<int:id>')
 
-# class StatByUserID(Resource):
-#     def get(self, id):
-#         user = User.query.filter_by(id=id).first()
-
-#         today = datetime.date.today()
-#         start_date = today - datetime.timedelta(days=today.weekday())
-#         end_date = start_date + datetime.timedelta(days=6)
-#         # stats = [s for s in HabitStat.query.filter_by(user_id=id).all()]
-#         week_history = HabitStat.query.filter_by(user_id=id).filter(
-#             HabitStat.created_at.between(start_date, end_date)).all()
-
-#         week_history_dict = [w.to_dict() for w in week_history]
-#         user_dict = user.to_dict()
-
-#         return make_response(week_history_dict, 200)
-
-#         id = session.get('user_id')
-
-
-# api.add_resource(StatByUserID, '/users/<int:id>/stats')
-
-# class StatHistory(Resource):
-#     def get(self):
-#         if session.get('user_id'):
-#             user = User.query.filter(User.id == session['user_id']).first()
-#         stats = [s.to_dict()
-#                  for s in HabitStat.query.filter_by(user_id=user.id).all()]
-
-#         today = datetime.date.today()
-#         start_date = today - datetime.timedelta(days=today.weekday())
-#         end_date = start_date + datetime.timedelta(days=6)
-#         week_history = stats.filter(
-#             stats.created_at.between(start_date, end_date)).all()
-
-#         return make_response(week_history, 200)
-
-
-# api.add_resource(StatHistory, '/history')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

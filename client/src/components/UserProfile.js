@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "./context/user";
 import { Button } from "@mui/material";
+import TempDrawer from "./TempDrawer";
 
 const UserProfile = () => {
     const { user, setUser } = useContext(UserContext)
@@ -27,18 +28,24 @@ const UserProfile = () => {
         })
             .then(r => r.json())
             .then(updatedUser => setUser(updatedUser))
-        window.alert("Driver Updated")
+        window.alert("Profile Updated")
         e.target.reset()
     }
 
     return (
         <div>
+            <TempDrawer />
             <div className="formDiv">
                 <form onSubmit={handleSubmit} >
                     <label for="username"> Username: </label>
-                    <input onChange={handleChange} type="text" name="username" value={user.username} />
+                    <br />
+                    <input onChange={handleChange} type="text" name="username" value={username} />
+                    <br />
                     <label for="image"> Enter Image URL: </label>
-                    <input onChange={handleChange} type="text" name="image" value={user.image} />
+                    <br />
+                    <input onChange={handleChange} type="text" name="image" value={image} />
+                    <br />
+                    <br />
                     <Button variant='outlined' type="submit">Submit</Button>
                 </form>
             </div>

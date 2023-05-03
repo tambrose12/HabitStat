@@ -34,7 +34,7 @@ const Login = ({ onLogin }) => {
             .then((r) => {
                 if (r.ok) {
                     r.json().then((user) => setUser(user));
-                    Cookies.set('user', 'loginTrue', { expires: 7 })
+                    Cookies.set('user', user.id, { expires: 7 })
                     navigate('/userdash')
                 } else {
                     r.json().then((err) => console.log(err));

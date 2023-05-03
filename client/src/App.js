@@ -11,8 +11,6 @@ import { UserProvider } from './components/context/user';
 import { UserContext } from './components/context/user';
 import HabitsCard from './components/HabitsCard'
 import HabitsList from './components/HabitsList'
-// import AuthApi from './AuthApi';
-import useSession from './components/useSession';
 import Cookies from 'js-cookie'
 import UserProfile from './components/UserProfile';
 
@@ -21,6 +19,7 @@ function App() {
 
   const { user, setUser } = useContext(UserContext)
   const [habits, setHabits] = useState([])
+  const [stats, setStats] = useState([])
 
   useEffect(() => {
     fetch("/check_session").then((response) => {
@@ -40,11 +39,32 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    fetch("/stats")
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((stats) => setStats(stats));
+        }
+      })
+  }, [])
+
+  const addStatToState = (newStat) => {
+    setStats([...stats, newStat])
+  }
+
+  const removeStatFromState = (deletedStatId => {
+    setStats(stats => stats.filter(stat => {
+      return stat.id != deletedStatId
+    }))
+  })
+
+
+
   function handleLogout() {
     setUser(null);
   }
 
-  let habitCard = habits.map(habit => <HabitsCard key={habit.id} habit={habit} />)
+  let habitCard = habits.map(habit => <HabitsCard key={habit.id} habit={habit} addStat={addStatToState} />)
 
 
   return (
@@ -54,7 +74,7 @@ function App() {
         <Route index element={<Root onLogout={handleLogout} user={user} />} />
         <Route path="/login" element={<Login onLogin={setUser} />} />
         <Route path="/signup" element={<SignUp onLogin={setUser} />} />
-        <Route path="/userdash" element={<UserDash />} />
+        <Route path="/userdash" element={<UserDash removeStat={removeStatFromState} />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/habits" element={<HabitsList habitCard={habitCard} />} />
         <Route path="*" element={<NotFound />} />

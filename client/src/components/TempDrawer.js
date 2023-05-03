@@ -11,14 +11,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AddchartIcon from '@mui/icons-material/Addchart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Cookies from 'js-cookie';
 
 export default function TempDrawer() {
     const navigate = useNavigate()
@@ -28,7 +26,11 @@ export default function TempDrawer() {
         fetch("/logout", {
             method: "DELETE",
             // }).then(() => onLogout());
-        }).then(() => setUser());
+        }).then(() => {
+            setUser()
+            Cookies.remove('user')
+        });
+
     }
 
     const [state, setState] = React.useState({

@@ -50,8 +50,8 @@ class User(db.Model, SerializerMixin):
     @property
     def week_history(self):
         today = datetime.date.today()
-        start_date = today - datetime.timedelta(days=today.weekday())
-        end_date = start_date + datetime.timedelta(days=6)
+        start_date = today - datetime.timedelta(days=today.weekday() + 6)
+        end_date = start_date + datetime.timedelta(days=12)
 
         week_history = HabitStat.query.filter(
             HabitStat.created_at.between(start_date, end_date)).all()
@@ -62,8 +62,8 @@ class User(db.Model, SerializerMixin):
 class Habit(db.Model, SerializerMixin):
     __tablename__ = 'habits'
 
-    serialize_rules = ('-habitstats.habit',
-                       '-habitstats.habit_id', '-users.habits')
+    serialize_rules = ('-habitstats.habit', '-habitstats.habit_id', '-users.habits',
+                       'users', '-users.habitstats', '-users.week_history', '-users._password_hash')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -71,7 +71,7 @@ class Habit(db.Model, SerializerMixin):
     goal = db.Column(db.Integer, nullable=False)
 
     habitstats = relationship('HabitStat', backref='habit')
-    users = association_proxy('habitstats', 'users')
+    users = association_proxy('habitstats', 'user')
 
 
 class HabitStat(db.Model, SerializerMixin):
