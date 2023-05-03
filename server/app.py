@@ -187,6 +187,28 @@ class HabitStatsById(Resource):
         db.session.commit()
         return make_response({'message': 'Stat Deleted'}, 201)
 
+    def patch(self, id):
+        data = request.get_json()
+        stat = HabitStat.query.filter_by(id=id).first()
+        if stat == None:
+            return make_response({'error': 'User not found'}, 404)
+
+        for attr in data:
+            setattr(stat, attr, data[attr])
+
+        try:
+            db.session.add(stat)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return make_response({'error': 'validation errors'}, 422)
+
+        response_dict = stat.to_dict()
+
+        response = make_response(response_dict, 200)
+
+        return response
+
 
 api.add_resource(HabitStatsById, '/stats/<int:id>')
 
@@ -200,7 +222,7 @@ class UserById(Resource):
         data = request.get_json()
         user = User.query.filter_by(id=id).first()
         if user == None:
-            return make_response({'error': 'u=User not found'}, 404)
+            return make_response({'error': 'User not found'}, 404)
 
         for attr in data:
             setattr(user, attr, data[attr])

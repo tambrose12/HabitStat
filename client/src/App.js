@@ -14,6 +14,7 @@ import HabitsList from './components/HabitsList'
 import Cookies from 'js-cookie'
 import UserProfile from './components/UserProfile';
 import StatsPage from './components/StatsPage';
+import ProgressModal from './components/ProgressModal';
 
 
 function App() {
@@ -75,7 +76,7 @@ function App() {
         <Route index element={<Root onLogout={handleLogout} user={user} />} />
         <Route path="/login" element={<Login onLogin={setUser} />} />
         <Route path="/signup" element={<SignUp onLogin={setUser} />} />
-        <Route path="/userdash" element={<UserDash removeStat={removeStatFromState} />} />
+        <Route path="/userdash" element={<UserDash removeStat={removeStatFromState} stats={stats} />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/habits" element={<HabitsList habitCard={habitCard} />} />
         <Route path="/userstats" element={<StatsPage setStats={setStats} />} />

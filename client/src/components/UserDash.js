@@ -9,6 +9,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Modal from "react-modal";
 import { Button } from "@mui/material";
+import ProgressModal from "./ProgressModal";
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -16,17 +19,17 @@ import { Button } from "@mui/material";
 const UserDash = ({ removeStat, stats }) => {
 	const { user, setUser } = useContext(UserContext)
 	const [modalOpen, setModalOpen] = useState(false);
+	const [thisStat, setThisStat] = useState('')
+	const [anAmount, setAnAmount] = useState(thisStat.amount)
 
-
-	let habitStats = user.habitstats
-
-	const [newAmount, setNewAmount] = useState(user.habitstats.amount)
-
+	const navigate = useNavigate()
 
 
 	if (user === null) {
 		return <Navigate replace to='/login' />
 	} else {
+
+		let habitStats = user.habitstats
 
 		const handleDelete = (id) => {
 			fetch(`/stats/${id}`, {
@@ -39,45 +42,67 @@ const UserDash = ({ removeStat, stats }) => {
 		}
 
 
-
-
-
 		let habitNames = habitStats.map(s => s.habit.name)
 
 		const uniqueStats = [...new Map(habitStats.map((h) => [h.name, h])).values()];
 
 
-		const handleChange = e => {
-			const { value } = e.target
-			setNewAmount(e.target.value)
+		const handleModalOpen = (aStat) => {
+			setModalOpen(true)
+			setThisStat(aStat)
 		}
 
-		// const addProgress = (e) => {
-		// 	e.preventDefault()
+		// useEffect(() => {
+		// 	fetch(`/stats/${thisStat.id}`)
+		// 		.then(r => r.json())
+		// 		.then(thisStat => setStat(thisStat))
+		// }, [id])
 
-		// 	fetch(`/stats/${stats.id}`, {
-		// 		method: 'PATCH',
-		// 		headers: { 'Content-Type': 'application/json' },
-		// 		body: JSON.stringify({
-		// 			amount: newAmount
-		// 		})
-		// 	})
-		// 		.then(r => r.json)
-		// 		.then(updatedStats => setUser({ ...user, user.habitstats }))
+		const handleChange = e => {
+			setAnAmount(e.target.value)
+		}
 
-		// }
+		const handleSubmit = e => {
+			e.preventDefault()
+			fetch(`/stats/${thisStat.id}`, {
+				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					amount: anAmount,
+					user_id: user.id,
+					habit_id: thisStat.habit.id
+				})
+			})
+				.then(r => r.json())
+				.then(updatedStat => setThisStat(updatedStat))
+			window.alert("Progress Updated")
+			e.target.reset()
+		}
 
-		const userHabitStats = habitStats.map((s) => {
+		const tableRows = habitStats.map((stat) => {
+
 
 			return (
-				<TableRow key={s.id}>
-					<TableCell> <button onClick={() => handleDelete(s.id)}><DeleteIcon fontSize="small" /></button>  {s.habit.name}</TableCell>
-					<TableCell>{s.habit.category}</TableCell>
-					<TableCell>{s.habit.goal} </TableCell>
-					<TableCell align="right" value={s.amount}>{s.amount} <button className='addBtn' onClick={() => setModalOpen(true)}><AddIcon /></button></TableCell>
-				</TableRow>
+				<div>
+					<TableRow key={stat.id} sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
+						<TableCell> <button onClick={() => handleDelete(stat.id)}><DeleteIcon fontSize="small" /></button>  {stat.habit.name}</TableCell>
+						<TableCell align="right">{stat.habit.category}</TableCell>
+						<TableCell align="right">{stat.habit.goal} </TableCell>
+						<TableCell align="right" value={stat.amount}>{stat.amount} <button className='addBtn' onClick={() => handleModalOpen(stat)}><AddIcon /></button></TableCell>
+					</TableRow>
+				</div>
 			)
 		})
+
+		// const modal = habitStats.map((stat) => {
+
+		// 	return (
+		// 		<div>
+		// 			<ProgressModal modalOpen={modalOpen} setModalOpen={setModalOpen} stat={stat} statId={stat.Id} />
+		// 		</div>
+		// 	)
+		// })
+
 
 
 		console.log(habitStats)
@@ -106,7 +131,7 @@ const UserDash = ({ removeStat, stats }) => {
 					<p>Welcome to your Dashboard</p>
 					<h3>Your Habit Goals:</h3>
 					<TableContainer>
-						<Table sx={{ maxWidth: 600 }} size="small" aria-label="a dense table">
+						<Table sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
 							<TableHead>
 								<TableRow>
 									<TableCell>Habit</TableCell>
@@ -116,31 +141,32 @@ const UserDash = ({ removeStat, stats }) => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{userHabitStats}
+								{tableRows}
 							</TableBody>
 						</Table>
 					</TableContainer>
 					<br />
+					{/* {modal} */}
 					<Modal
 						isOpen={modalOpen}
 						onRequestClose={() => setModalOpen(false)}
-
 					>
 						<div className='Login'>
 							{/* onSubmit={addProgress} */}
-							<form >
-								<label for="car_number"> Enter Progress: </label>
+							<form onSubmit={handleSubmit}>
+								<label for="amount"> Enter Progress: </label>
 								<br />
-								<input onChange={handleChange} type="number" name="amount" value={newAmount} />
+								<input onChange={handleChange} type="number" name="amount" value={anAmount} />
 								<br />
-								<Button variant='outlined' type="submit">Submit Progress</Button>
+								<Button variant='outlined' sx={{ marginTop: 2 }} type="submit">Submit Progress</Button>
 							</form>
 							<br />
-							<Button variant='outlined' onClick={() => setModalOpen(false)} >
+							<Button variant='outlined' sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
 								Close Update Form
 							</Button>
 						</div>
 					</Modal>
+
 
 				</div>
 			);

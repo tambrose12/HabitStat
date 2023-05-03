@@ -1,6 +1,7 @@
 import Charts from "./Charts";
 import UserDataGrid from "./UserDataGrid";
 import TempDrawer from "./TempDrawer";
+import Modal from "react-modal";
 
 const StatsPage = ({ setStats }) => {
 
