@@ -84,7 +84,7 @@ class HabitStat(db.Model, SerializerMixin):
     created_at = db.Column(
         db.DateTime, server_default=db.func.now(), nullable=False)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    amount = db.Column(db.Integer, nullable=False)
+    amount = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     habit_id = db.Column(db.Integer, db.ForeignKey(
         'habits.id'), nullable=False)
@@ -96,3 +96,19 @@ class HabitStat(db.Model, SerializerMixin):
         elif amt < 1 or amt > 99:
             raise ValueError("Invalid number")
         return amt
+
+
+class StatHistory(db.Model, SerializerMixin):
+    __tablename__ = 'stathistory'
+
+    serialize_rules = ('-habit.habitstats', '-habit.users',
+                       '-user')
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(
+        db.DateTime, server_default=db.func.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    amount = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    habit_id = db.Column(db.Integer, db.ForeignKey(
+        'habits.id'), nullable=False)

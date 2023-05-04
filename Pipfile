@@ -11,6 +11,8 @@ flask-bcrypt = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
 flask-cors = "*"
+sqlalchemy = "*"
+python-crontab = "*"
 
 [dev-packages]
 
