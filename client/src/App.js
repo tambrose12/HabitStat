@@ -13,7 +13,6 @@ import UserProfile from './components/UserProfile';
 import StatsPage from './components/StatsPage';
 
 
-
 function App() {
 
   const { user, setUser } = useContext(UserContext)
