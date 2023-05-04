@@ -84,7 +84,7 @@ class HabitStat(db.Model, SerializerMixin):
     created_at = db.Column(
         db.DateTime, server_default=db.func.now(), nullable=False)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    amount = db.Column(db.Float, nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     habit_id = db.Column(db.Integer, db.ForeignKey(
         'habits.id'), nullable=False)

@@ -14,9 +14,6 @@ const HabitsCard = ({ habit, addStat }) => {
     const [newHabitId, setNewHabitId] = useState(habit.id)
     const [addButton, setAddButton] = useState(true)
 
-
-
-
     // const toggleAddButton = () => {
     //     setAddButton(false)
     // }
@@ -90,7 +87,7 @@ const HabitsCard = ({ habit, addStat }) => {
     return (
 
         <Box>
-            <Card sx={{ maxWidth: 350, minWidth: 250, padding: 5, margin: 2, maxHeight: 200, }} onClick={handleAdd}>
+            <Card sx={{ maxWidth: 350, minWidth: 350, padding: 5, margin: 2, maxHeight: 200, }} onClick={handleAdd}>
                 <CardContent
                     sx={{
                         "@media screen and (max-width: 800px)": {

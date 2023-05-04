@@ -9,20 +9,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Modal from "react-modal";
 import { Button } from "@mui/material";
-import ProgressModal from "./ProgressModal";
-import { useNavigate } from "react-router-dom";
+import { StatsContext } from './context/stats';
 
 
 
 
-
-const UserDash = ({ removeStat, stats }) => {
+const UserDash = ({ removeStat }) => {
 	const { user, setUser } = useContext(UserContext)
+	const { stats, setStats } = useContext(StatsContext)
 	const [modalOpen, setModalOpen] = useState(false);
 	const [thisStat, setThisStat] = useState('')
 	const [anAmount, setAnAmount] = useState(thisStat.amount)
 
-	const navigate = useNavigate()
+	console.log(thisStat)
 
 
 	if (user === null) {
@@ -30,6 +29,7 @@ const UserDash = ({ removeStat, stats }) => {
 	} else {
 
 		let habitStats = user.habitstats
+
 
 		const handleDelete = (id) => {
 			fetch(`/stats/${id}`, {
@@ -42,7 +42,7 @@ const UserDash = ({ removeStat, stats }) => {
 		}
 
 
-		let habitNames = habitStats.map(s => s.habit.name)
+		// let habitNames = habitStats.map(s => s.habit.name)
 
 		const uniqueStats = [...new Map(habitStats.map((h) => [h.name, h])).values()];
 
@@ -64,17 +64,23 @@ const UserDash = ({ removeStat, stats }) => {
 
 		const handleSubmit = e => {
 			e.preventDefault()
+
+			const newStat = {
+				amount: parseInt(anAmount),
+				user_id: user.id,
+				habit_id: thisStat.habit.id
+			}
+
 			fetch(`/stats/${thisStat.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					amount: anAmount,
-					user_id: user.id,
-					habit_id: thisStat.habit.id
-				})
+				body: JSON.stringify(newStat)
 			})
 				.then(r => r.json())
 				.then(updatedStat => setThisStat(updatedStat))
+			// setStats({ ...stats, amount: [...stats.amount, anAmount] })
+			// setUser({ ...user, habitstats: [...user.habitstats, newStat] })
+			// setStats([...stats, newStat])
 			window.alert("Progress Updated")
 			e.target.reset()
 		}
@@ -82,9 +88,10 @@ const UserDash = ({ removeStat, stats }) => {
 		const tableRows = habitStats.map((stat) => {
 
 
+
 			return (
 				<TableRow key={stat.id} sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
-					<TableCell> <button onClick={() => handleDelete(stat.id)}><DeleteIcon fontSize="small" /></button>  {stat.habit.name}</TableCell>
+					<TableCell><button onClick={() => handleDelete(stat.id)}><DeleteIcon fontSize="small" /></button> {stat.habit.name}</TableCell>
 					<TableCell align="right">{stat.habit.category}</TableCell>
 					<TableCell align="right">{stat.habit.goal} </TableCell>
 					<TableCell align="right" value={stat.amount}>{stat.amount} <button className='addBtn' onClick={() => handleModalOpen(stat)}><AddIcon /></button></TableCell>
@@ -154,7 +161,7 @@ const UserDash = ({ removeStat, stats }) => {
 							<form onSubmit={handleSubmit}>
 								<label for="amount"> Enter Progress: </label>
 								<br />
-								<input onChange={handleChange} type="number" name="amount" value={anAmount} />
+								<input onChange={handleChange} type="number" name="amount" min="number" value={thisStat.amount} />
 								<br />
 								<Button variant='outlined' sx={{ marginTop: 2 }} type="submit">Submit Progress</Button>
 							</form>

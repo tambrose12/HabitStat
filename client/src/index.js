@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './components/context/user';
+import { StatsProvider } from './components/context/stats';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,7 +13,9 @@ root.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<UserProvider>
-				<App />
+				<StatsProvider>
+					<App />
+				</StatsProvider>
 			</UserProvider>
 		</BrowserRouter>
 	</React.StrictMode>
