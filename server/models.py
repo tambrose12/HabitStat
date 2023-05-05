@@ -19,8 +19,8 @@ metadata = MetaData(naming_convention={
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-habitstats.user', '-_password_hash'
-                       '-habitstats.user_id', '-habits.users', 'week_history', 'habits')
+    serialize_rules = ('-habitstats.user', '-_password_hash', '-stathistory.user', '-habits.history',
+                       '-habitstats.user_id', '-habits.users', 'habits', 'history')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -29,6 +29,7 @@ class User(db.Model, SerializerMixin):
 
     habitstats = relationship('HabitStat', backref='user')
     habits = association_proxy('habitstats', 'habit')
+    history = relationship('StatHistory', backref='user')
 
     @hybrid_property
     def password_hash(self):
@@ -47,23 +48,12 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<User {self.username}>'
 
-    @property
-    def week_history(self):
-        today = datetime.date.today()
-        start_date = today - datetime.timedelta(days=today.weekday() + 6)
-        end_date = start_date + datetime.timedelta(days=12)
-
-        week_history = HabitStat.query.filter(
-            HabitStat.created_at.between(start_date, end_date)).all()
-
-        return week_history
-
 
 class Habit(db.Model, SerializerMixin):
     __tablename__ = 'habits'
 
-    serialize_rules = ('-habitstats.habit', '-habitstats.habit_id', '-users.habits',
-                       'users', '-users.habitstats', '-users.week_history', '-users._password_hash')
+    serialize_rules = ('-habitstats.habit', '-habitstats.habit_id', '-users.habits', '-history.habit',
+                       'users', '-users.habitstats', '-users.history', '-users._password_hash', )
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -72,13 +62,14 @@ class Habit(db.Model, SerializerMixin):
 
     habitstats = relationship('HabitStat', backref='habit')
     users = association_proxy('habitstats', 'user')
+    history = relationship('StatHistory', backref='habit')
 
 
 class HabitStat(db.Model, SerializerMixin):
     __tablename__ = 'habitstats'
 
     serialize_rules = ('-habit.habitstats', '-habit.users',
-                       '-user')
+                       '-user', )
 
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(
@@ -93,7 +84,7 @@ class HabitStat(db.Model, SerializerMixin):
     def validate_amount(self, key, amt):
         if type(amt) is not int:
             raise TypeError('Amount must be a number.')
-        elif amt < 1 or amt > 99:
+        elif amt < 0 or amt > 99:
             raise ValueError("Invalid number")
         return amt
 
@@ -101,8 +92,8 @@ class HabitStat(db.Model, SerializerMixin):
 class StatHistory(db.Model, SerializerMixin):
     __tablename__ = 'stathistory'
 
-    serialize_rules = ('-habit.habitstats', '-habit.users',
-                       '-user')
+    serialize_rules = ('-habit.habitstats', '-habit.users', '-habit.history',
+                       '-user', 'habit')
 
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(
@@ -112,3 +103,14 @@ class StatHistory(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     habit_id = db.Column(db.Integer, db.ForeignKey(
         'habits.id'), nullable=False)
+
+    @property
+    def week_history(self):
+        today = datetime.date.today()
+        start_date = today - datetime.timedelta(days=7)
+        # end_date = start_date + datetime.timedelta(days=12)
+
+        week_history = StatHistory.query.filter(
+            StatHistory.created_at.between(start_date, today)).all()
+
+        return week_history

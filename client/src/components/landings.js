@@ -2,19 +2,25 @@ import NavButton from './NavButton'
 import Login from './Login'
 import NavBar from './NavBar'
 import UserDash from './UserDash'
+import SignUp from './SignUp'
 
-export const Root = ({ onLogout, user }) => {
-    if (user) {
+export const Root = ({ onLogout, user, removeStat }) => {
+    if (!user) {
         return (
             <>
-                {/* <NavBar onLogout={onLogout} /> */}
+                <Login />
 
-                <UserDash />
             </>
         )
-    } else {
-        return <Login />;
     }
+    else if (user) {
+        return (
+            <>
+                <UserDash removeStat={removeStat} />
+            </>
+        )
+    }
+
 }
 
 export const NotFound = () => {

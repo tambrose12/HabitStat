@@ -5,7 +5,7 @@ from models import HabitStat, StatHistory
 with app.app_context():
     # Select data from the main database
     data = HabitStat.query.filter(
-        HabitStat.created_at < datetime.today() - timedelta(days=1)).all()
+        HabitStat.created_at < datetime.utcnow() - timedelta(days=1)).all()
 
     # Insert the data into the history database
     for item in data:
@@ -18,7 +18,14 @@ with app.app_context():
 
     # Delete the data from the main database
     HabitStat.query.filter(
-        HabitStat.created_at < datetime.today()).delete()
+        HabitStat.created_at < datetime.utcnow()).delete()
 
     # Commit the changes to both databases
     db.session.commit()
+
+    for item in data:
+        new_day_stat = HabitStat(
+            amount=0, user_id=item.user_id, habit_id=item.habit_id)
+
+        db.session.add(new_day_stat)
+        db.session.commit()

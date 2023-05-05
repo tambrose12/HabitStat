@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Root } from "./landings";
 import { Modal } from "@mui/material";
 import { Button } from "@mui/material";
+import TextField from '@mui/material/TextField';
+import { Box } from '@mui/material';
+import NavButton from "./NavButton";
 
 
 function SignUp({ onLogin }) {
@@ -10,7 +13,6 @@ function SignUp({ onLogin }) {
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    // const [modalOpen, setModalOpen] = useState(false);
 
     const navigate = useNavigate()
 
@@ -47,58 +49,48 @@ function SignUp({ onLogin }) {
     }
 
 
-
-
-
     return (
         <div className='Login'>
+            <h1>Welcome to HabitStat!</h1>
+            <h2>Create An Account</h2>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username</label>
-                <br />
-                <input
+                <TextField
+                    label="Username"
                     type="text"
                     id="username"
                     autoComplete="off"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    sx={{ margin: 1 }}
                 />
                 <br />
-                <label htmlFor="password">Password</label>
-                <br />
-                <input
+                <TextField
+                    label="Password"
                     type="password"
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
+                    sx={{ margin: 1 }}
                 />
                 <br />
-                <label htmlFor="password">Password Confirmation</label>
-                <br />
-                <input
+                <TextField
+                    label="Confirm Password"
                     type="password"
                     id="password_confirmation"
                     value={passwordConfirmation}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}
                     autoComplete="current-password"
+                    sx={{ margin: 1 }}
                 />
                 <br />
-
-                <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
+                <Box textAlign='center'>
+                    <Button variant='contained' sx={{ margin: 1 }} color="success" type='submit'>{isLoading ? "Loading..." : "Sign Up"}</Button>
+                </Box>
             </form>
-            {/* 
-            <Modal
-                isOpen={modalOpen}
-                onRequestClose={() => setModalOpen(false)}
-            >
-                <div>
-                    <h2>Username taken. Please try another username.</h2>
-                    <Button onClick={() => setModalOpen(false)} variant="outlined">
-                        Back to SignUp
-                    </Button>
-
-                </div>
-            </Modal> */}
+            <Box >
+                <NavButton text="Back to LogIn" />
+            </Box>
 
         </div>
     );

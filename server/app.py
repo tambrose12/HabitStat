@@ -149,7 +149,8 @@ api.add_resource(HabitsById, '/habits/<int:id>')
 
 class HabitStats(Resource):
     def get(self):
-        stats = [s.to_dict() for s in HabitStat.query.filter_by()]
+        stats = [s.to_dict()
+                 for s in HabitStat.query.filter_by(user_id=session['user_id'])]
         return make_response(stats, 200)
 
     def post(self):

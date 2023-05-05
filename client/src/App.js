@@ -11,6 +11,7 @@ import HabitsCard from './components/HabitsCard'
 import HabitsList from './components/HabitsList'
 import UserProfile from './components/UserProfile';
 import StatsPage from './components/StatsPage';
+import PermaDrawer from './components/PermaDrawer'
 
 
 function App() {
@@ -70,10 +71,9 @@ function App() {
     <div>
 
       <Routes>
-        <Route index element={<Root onLogout={handleLogout} user={user} />} />
+        <Route index element={<Root onLogout={handleLogout} user={user} removeStat={removeStatFromState} />} />
         <Route path="/login" element={<Login onLogin={setUser} />} />
         <Route path="/signup" element={<SignUp onLogin={setUser} />} />
-        <Route path="/userdash" element={<UserDash removeStat={removeStatFromState} />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/habits" element={<HabitsList habitCard={habitCard} />} />
         <Route path="/userstats" element={<StatsPage setStats={setStats} />} />

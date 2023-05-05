@@ -10,7 +10,7 @@ const StatsPage = ({ setStats }) => {
         <div>
             <TempDrawer />
             <br />
-            <UserDataGrid setStats={setStats} />
+            {/* <UserDataGrid setStats={setStats} /> */}
             <Charts />
         </div>
     )

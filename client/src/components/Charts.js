@@ -11,7 +11,8 @@ const Charts = () => {
     const waterData = {};
     const exerciseData = {};
     const meditationData = {};
-    for (const entry of user.week_history) {
+    for (const entry of user.history) {
+        console.log(entry)
         if (entry.habit.name == "Water Intake") {
             const date = new Date(entry.created_at).toLocaleDateString();
             if (!waterData[date]) {

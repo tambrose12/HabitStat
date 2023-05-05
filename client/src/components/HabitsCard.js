@@ -5,46 +5,58 @@ import { Box } from "@mui/system";
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
+
+const AddButton = (handleAdd) => {
+
+    return (
+        <button onClick={handleAdd}>
+            <AddCircleOutlineIcon sx={{ color: "#0096FF" }} />
+        </button>
+    )
+}
+
+const CheckBtton = () => {
+    return (
+        <button>
+            <FileDownloadDoneIcon sx={{ color: "#50C878" }} />
+        </button>
+    )
+}
+
+
 const HabitsCard = ({ habit, addStat }) => {
 
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
 
     const [newAmount, setNewAmount] = useState(0)
     const [newUserId, setNewUserId] = useState(user.id)
     const [newHabitId, setNewHabitId] = useState(habit.id)
-    const [addButton, setAddButton] = useState(true)
 
-    // const toggleAddButton = () => {
-    //     setAddButton(false)
-    // }
 
     const handleAdd = (e) => {
         e.preventDefault()
 
-        if (addButton === false) {
-            window.alert("This Habit is already on your list.")
-        } else {
-            const newHabitStat = {
-                amount: newAmount,
-                user_id: newUserId,
-                habit_id: newHabitId
-            }
-
-            fetch('/stats', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newHabitStat)
-            })
-                .then(r => r.json)
-                .then(addStat)
-
-            setAddButton(false)
+        const newHabitStat = {
+            amount: newAmount,
+            user_id: newUserId,
+            habit_id: newHabitId
         }
+
+        fetch('/stats', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newHabitStat)
+        })
+            .then(r => r.json)
+            .then(addStat)
+
+        // containsObject(habit.name, userHabitNames)
+        setUser({ ...user, habitstats: [...user.habitstats, newHabitStat] })
+
     }
 
-    // const handleClick = (e) => {
-    //     setNewHabitId(e)
-    //     handleAdd()
+    // const handleClick = (habit) => {
+    //     addStat(stat)
     // }
 
     // const renderUnits = () => {
@@ -58,36 +70,39 @@ const HabitsCard = ({ habit, addStat }) => {
     // }
 
     const userHabits = user.habits
-    // console.log(userHabits)
+    console.log(userHabits)
     // const uniqueHabits = [...new Map(habits.map((h) => [h.name, h])).values()];
     const userHabitNames = userHabits.map((h) => h.name)
     // console.log(userHabitNames)
+
+    //*************************** */
 
     function containsObject(obj, list) {
         var i;
         for (i = 0; i < list.length; i++) {
             if (list[i] === obj) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
+
 
     // Old Ternary logic
     // containsObject(habit.name, userHabitNames)
 
+
     const uniqueUsers = [...new Map(habit.users.map((u) => [u.username, u])).values()];
-    console.log(uniqueUsers)
+
     const habitUsers = uniqueUsers.map((u) => {
-        return <li>{u.username}</li>
+        return <li key={u.id}>{u.username}</li>
     })
-    console.log(habitUsers)
 
     return (
 
         <Box>
-            <Card sx={{ maxWidth: 350, minWidth: 350, padding: 5, margin: 2, maxHeight: 200, }} onClick={handleAdd}>
+            <Card sx={{ maxWidth: 350, minWidth: 350, padding: 5, margin: 2, maxHeight: 200, }} >
                 <CardContent
                     sx={{
                         "@media screen and (max-width: 800px)": {
@@ -98,7 +113,10 @@ const HabitsCard = ({ habit, addStat }) => {
                     }}
                 >
                     <Typography gutterBottom variant="h5" component="div">
-                        {habit.name}        <button onClick={addStat}>{containsObject(habit.name, userHabitNames) ? <FileDownloadDoneIcon sx={{ color: "#50C878" }} /> : <AddCircleOutlineIcon sx={{ color: "#0096FF" }} />}</button>
+                        {habit.name}
+                        <button onClick={handleAdd}>{containsObject(habit.name, userHabitNames) ? <AddCircleOutlineIcon sx={{ color: "#0096FF" }} /> : <FileDownloadDoneIcon sx={{ color: "#50C878" }} />}</button>
+                        {/* <button onClick={handleAdd}><AddCircleOutlineIcon sx={{ color: "#0096FF" }} /></button> */}
+                        {/* {containsObject(habit.name, userHabitNames) ? <AddButton handleAdd={handleAdd} /> : <CheckBtton />} */}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         Category: {habit.category} <br />

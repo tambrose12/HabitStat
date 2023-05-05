@@ -59,16 +59,6 @@ export default function TempDrawer() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {/* {['Profile', 'User Dashboard', 'Select New Habits', 'See Habit Stats'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))} */}
                 <ListItem disablePadding>
                     <ListItemButton onClick={() => navigate('/profile')}>
                         <ListItemIcon>
@@ -78,7 +68,7 @@ export default function TempDrawer() {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton onClick={() => navigate('/userdash')}>
+                    <ListItemButton onClick={() => navigate('/')}>
                         <ListItemIcon>
                             <SpaceDashboardIcon />
                         </ListItemIcon>

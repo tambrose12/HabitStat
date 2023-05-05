@@ -37,14 +37,22 @@ body {
   color: #0096FF;
 }
 
+.deleteBtn {
+  border: none;
+  background: none;
+  margin-left: 15px;
+  font-size: small;
+  color: #b61b2a;
+}
+
 .habitList {
   display: flex;
   flex-wrap: wrap;
 }
 
 .userImage {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   justify-content: center;
   object-fit: cover;
   border-radius: 50%;
