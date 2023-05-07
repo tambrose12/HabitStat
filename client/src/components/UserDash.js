@@ -1,7 +1,5 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "./context/user";
-import { Navigate } from "react-router-dom";
-import Charts from "./Charts";
 import TempDrawer from "./TempDrawer";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { TableContainer, Table, TableBody, TableRow, TableHead, TableCell } from "@mui/material";
@@ -14,14 +12,12 @@ import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
 
 
-const UserDash = ({ removeStat }) => {
+const UserDash = ({ }) => {
 	const { user, setUser } = useContext(UserContext)
 	const { stats, setStats } = useContext(StatsContext)
 	const [modalOpen, setModalOpen] = useState(false);
 	const [thisStat, setThisStat] = useState('')
-	const [anAmount, setAnAmount] = useState('')
 
-	console.log(thisStat)
 
 	let habitStats = user.habitstats
 
@@ -31,7 +27,6 @@ const UserDash = ({ removeStat }) => {
 		}))
 	}
 
-	console.log(user.habits)
 	const handleDelete = (id) => {
 		fetch(`/stats/${id}`, {
 			method: 'DELETE',
@@ -42,10 +37,11 @@ const UserDash = ({ removeStat }) => {
 		const updatedHabitStats = habitStats.filter((stat) => {
 			return stat.id != id
 		})
-		const updatedHabits = user.habits.filter((habit) => {
-			return habit.habitstats.id != id
-		})
-		setUser({ ...user, habitstats: updatedHabitStats, habits: updatedHabits })
+		// const updatedHabits = habits.filter((habit) => {
+		// 	return habit.habitstats.id != id
+		// })
+		// setUser({ ...user, habitstats: updatedHabitStats, habits: updatedHabits })
+		setUser({ ...user, habitstats: updatedHabitStats })
 		window.alert("Habit removed from list")
 
 	}
@@ -74,12 +70,20 @@ const UserDash = ({ removeStat }) => {
 			habit_id: thisStat.habit.id
 		}
 
+		function handleErrors(response) {
+			if (!response.ok) {
+				window.alert("Error: Ensure field is valid. Cannot exceed 100.");
+				throw Error(response.statusText)
+			}
+			return response.json();
+		}
+
 		fetch(`/stats/${thisStat.id}`, {
 			method: 'PATCH',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newStat)
 		})
-			.then(r => r.json())
+			.then(handleErrors)
 			.then(updatedStat => {
 				setThisStat(updatedStat)
 				const updatedHabitStats = habitStats.map((stat) => {

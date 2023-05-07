@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "./context/user";
 import Charts from "./Charts";
-import UserDataGrid from "./UserDataGrid";
 import TempDrawer from "./TempDrawer";
 import { TableContainer, Table, TableBody, TableRow, TableHead, TableCell } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
@@ -10,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
 import { Button } from "@mui/material";
 
-const StatsPage = ({ setStats }) => {
+const StatsPage = ({ }) => {
     const { user, setUser } = useContext(UserContext)
     const [modalOpen, setModalOpen] = useState(false);
     const [thisStat, setThisStat] = useState('')

@@ -19,7 +19,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import InsightsIcon from '@mui/icons-material/Insights';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 export default function TempDrawer() {

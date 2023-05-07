@@ -1,13 +1,24 @@
 import NavButton from './NavButton'
 import Login from './Login'
-import NavBar from './NavBar'
 import UserDash from './UserDash'
-import SignUp from './SignUp'
+import AppBar from '@mui/material/AppBar';
+import { Toolbar } from '@mui/material';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
-export const Root = ({ onLogout, user, removeStat }) => {
+
+export const Root = ({ user, removeStat }) => {
     if (!user) {
         return (
             <>
+                <AppBar position="static">
+                    <Toolbar color="primary" sx={{ display: "flex", flexDirection: "row", justifyContent: "content-distribution" }}>
+
+                        <div id="header">
+                            <h1> HabitStat </h1><TrendingUpIcon fontSize='large' />
+                        </div>
+
+                    </Toolbar>
+                </AppBar>
                 <Login />
 
             </>
@@ -25,11 +36,11 @@ export const Root = ({ onLogout, user, removeStat }) => {
 
 export const NotFound = () => {
     return (
-        <>
-            <NavButton />
+        <div className='Login' >
+            <NavButton text='Back to Site' path="/" />
             <br />
-            <h1>404 Not Found</h1>
-        </>
+            <h1>404: Page Not Found</h1>
+        </div>
     )
 
 }

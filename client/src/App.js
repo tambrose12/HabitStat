@@ -4,21 +4,19 @@ import { Routes, Route, Redirect } from 'react-router'
 import { Root, NotFound } from './components/landings'
 import SignUp from './components/SignUp'
 import Login from './components/Login';
-import UserDash from './components/UserDash';
 import { UserContext } from './components/context/user';
 import { StatsContext } from './components/context/stats';
 import HabitsCard from './components/HabitsCard'
 import HabitsList from './components/HabitsList'
 import UserProfile from './components/UserProfile';
 import StatsPage from './components/StatsPage';
-import PermaDrawer from './components/PermaDrawer'
+
 
 
 function App() {
 
   const { user, setUser } = useContext(UserContext)
   const [habits, setHabits] = useState([])
-  // const [stats, setStats] = useState([])
   const { stats, setStats } = useContext(StatsContext)
 
   useEffect(() => {
@@ -39,14 +37,14 @@ function App() {
       })
   }, [])
 
-  // useEffect(() => {
-  //   fetch("/stats")
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         response.json().then((stats) => setStats(stats));
-  //       }
-  //     })
-  // }, [])
+  useEffect(() => {
+    fetch("/stats")
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((stats) => setStats(stats));
+        }
+      })
+  }, [])
 
   const addStatToState = (newStat) => {
     setStats([...stats, newStat])
@@ -71,12 +69,12 @@ function App() {
     <div>
 
       <Routes>
-        <Route index element={<Root onLogout={handleLogout} user={user} removeStat={removeStatFromState} />} />
-        <Route path="/login" element={<Login onLogin={setUser} />} />
-        <Route path="/signup" element={<SignUp onLogin={setUser} />} />
+        <Route index element={<Root onLogout={handleLogout} user={user} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/habits" element={<HabitsList habitCard={habitCard} />} />
-        <Route path="/userstats" element={<StatsPage setStats={setStats} />} />
+        <Route path="/userstats" element={<StatsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

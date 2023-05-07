@@ -1,8 +1,6 @@
 import { useContext, useState } from 'react'
-import NavButton from './NavButton'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./context/user";
-import Cookies from 'js-cookie'
 import { Button } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
@@ -11,7 +9,7 @@ import { Box } from '@mui/material';
 
 
 
-const Login = ({ onLogin }) => {
+const Login = ({ }) => {
 
     const { user, setUser } = useContext(UserContext)
     const [username, setUsername] = useState("");
