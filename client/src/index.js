@@ -10,15 +10,13 @@ import { StatsProvider } from './components/context/stats';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-	<React.StrictMode>
-		<BrowserRouter>
-			<UserProvider>
-				<StatsProvider>
-					<App />
-				</StatsProvider>
-			</UserProvider>
-		</BrowserRouter>
-	</React.StrictMode>
+	<BrowserRouter>
+		<UserProvider>
+			<StatsProvider>
+				<App />
+			</StatsProvider>
+		</UserProvider>
+	</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

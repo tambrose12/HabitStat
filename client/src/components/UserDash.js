@@ -29,17 +29,21 @@ const UserDash = ({ removeStat }) => {
 		}))
 	}
 
+	console.log(user.habits)
 	const handleDelete = (id) => {
 		fetch(`/stats/${id}`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
 		})
-			.then(r => r.json)
+			.then(r => r.json().then(console.log(r)))
 			.then(removeStatfromState(id))
 		const updatedHabitStats = habitStats.filter((stat) => {
 			return stat.id != id
 		})
-		setUser({ ...user, habitstats: updatedHabitStats })
+		const updatedHabits = user.habits.filter((habit) => {
+			return habit.habitstats.id != id
+		})
+		setUser({ ...user, habitstats: updatedHabitStats, habits: updatedHabits })
 		window.alert("Habit removed from list")
 
 	}
@@ -124,51 +128,53 @@ const UserDash = ({ removeStat }) => {
 		return (
 			<div>
 				<TempDrawer />
-				<h2>Hello, {user.username}!</h2>
-				<img className="userImage" src={user.image} alt={user.username} />
-				<p>Welcome to your Dashboard!</p>
-				<p>Click the Menu to find the option to add habits to your list of goals.</p>
-				<h3>Your Habit Goals:</h3>
-				<br />
-				<TableContainer>
-					<Table sx={{ maxWidth: 800 }} size="small" aria-label="a dense table">
-						<TableHead>
-							<TableRow>
-								<TableCell sx={{ maxWidth: 10 }}> </TableCell>
-								<TableCell sx={{ fontWeight: 'bold' }} >Habit</TableCell>
-								<TableCell sx={{ fontWeight: 'bold' }} align="right">Category</TableCell>
-								<TableCell sx={{ fontWeight: 'bold' }} align="right">Goal</TableCell>
-								<TableCell sx={{ fontWeight: 'bold' }} align="right">Progress</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{tableRows}
-						</TableBody>
-					</Table>
-				</TableContainer>
-				<br />
-				<Modal
-					ariaHideApp={false}
-					isOpen={modalOpen}
-					onRequestClose={() => setModalOpen(false)}
-				>
-					<div className='Login'>
-						{/* onSubmit={addProgress} */}
-						<form onSubmit={handleSubmit}>
-							<label for="amount"> Enter Progress: </label>
+				<div className="mainDiv">
+					<h2>Hello, {user.username}!</h2>
+					<img className="userImage" src={user.image} alt={user.username} />
+					<p>Welcome to your Dashboard!</p>
+					<p>Click the Menu to find the option to add habits to your list of goals.</p>
+					<h3>Your Habit Goals:</h3>
+					<br />
+					<TableContainer sx={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
+						<Table sx={{ maxWidth: 900, justifyContent: "center", textAlign: "center" }} size="small" aria-label="a dense table">
+							<TableHead>
+								<TableRow>
+									<TableCell sx={{ maxWidth: 10 }}> </TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }} >Habit</TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }} align="right">Category</TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }} align="right">Goal</TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }} align="right">Progress</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{tableRows}
+							</TableBody>
+						</Table>
+					</TableContainer>
+					<br />
+					<Modal
+						ariaHideApp={false}
+						isOpen={modalOpen}
+						onRequestClose={() => setModalOpen(false)}
+					>
+						<div className='Login'>
+							{/* onSubmit={addProgress} */}
+							<form onSubmit={handleSubmit}>
+								<label for="amount"> Enter Progress: </label>
+								<br />
+								<input onChange={handleChange} type="number" name="amount" min="number" value={thisStat.amount} />
+								<br />
+								<Button variant='outlined' sx={{ marginTop: 2 }} type="submit">Submit Progress</Button>
+							</form>
 							<br />
-							<input onChange={handleChange} type="number" name="amount" min="number" value={thisStat.amount} />
-							<br />
-							<Button variant='outlined' sx={{ marginTop: 2 }} type="submit">Submit Progress</Button>
-						</form>
-						<br />
-						<Button variant='outlined' sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
-							Close Form
-						</Button>
-					</div>
-				</Modal>
+							<Button variant='outlined' sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
+								Close Form
+							</Button>
+						</div>
+					</Modal>
 
 
+				</div>
 			</div>
 		);
 	}

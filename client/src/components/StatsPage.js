@@ -9,9 +9,11 @@ const StatsPage = ({ setStats }) => {
     return (
         <div>
             <TempDrawer />
-            <br />
-            {/* <UserDataGrid setStats={setStats} /> */}
-            <Charts />
+            <div className="chartDiv">
+                <br />
+                {/* <UserDataGrid setStats={setStats} /> */}
+                <Charts />
+            </div>
         </div>
     )
 

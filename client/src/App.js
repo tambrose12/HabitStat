@@ -21,14 +21,14 @@ function App() {
   // const [stats, setStats] = useState([])
   const { stats, setStats } = useContext(StatsContext)
 
-  // useEffect(() => {
-  //   fetch("/check_session").then((response) => {
-  //     if (response.ok) {
-  //       response.json().then((user) => setUser(user));
-  //     }
-  //   });
+  useEffect(() => {
+    fetch("/check_session").then((response) => {
+      if (response.ok) {
+        response.json().then((user) => setUser(user));
+      }
+    });
 
-  // }, []);
+  }, []);
 
   useEffect(() => {
     fetch("/habits")

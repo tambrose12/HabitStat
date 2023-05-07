@@ -23,11 +23,11 @@ code {
   color: white;
 } */
 
-body {
+/* body {
 
   margin-left: 250px;
   margin-right: 200px;
-}
+} */
 
 .addBtn {
   border: none;
@@ -56,4 +56,11 @@ body {
   justify-content: center;
   object-fit: cover;
   border-radius: 50%;
+}
+
+#header {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }

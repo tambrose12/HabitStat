@@ -1,9 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/user";
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
+let renderCount = 0
+
 
 
 const AddButton = (handleAdd) => {
@@ -28,10 +31,22 @@ const HabitsCard = ({ habit, addStat }) => {
 
     const { user, setUser } = useContext(UserContext)
 
+    console.log(user)
+
     const [newAmount, setNewAmount] = useState(0)
-    const [newUserId, setNewUserId] = useState(user.id)
+    const [newUserId, setNewUserId] = useState(user ? user.id : 1)
     const [newHabitId, setNewHabitId] = useState(habit.id)
 
+    useEffect(() => {
+        if (!user) {
+            fetch("/check_session")
+                .then((response) => {
+                    if (response.ok) {
+                        response.json().then((user) => setUser(user))
+                    }
+                })
+        }
+    }, [])
 
     const handleAdd = (e) => {
         e.preventDefault()
@@ -47,11 +62,15 @@ const HabitsCard = ({ habit, addStat }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newHabitStat)
         })
-            .then(r => r.json)
-            .then(addStat)
+            .then(r => r.json())
+            .then(newStat => {
+                addStat(newStat)
+                console.log(newStat)
+                setUser({ ...user, habitstats: [...user.habitstats, newStat], habits: [...user.habits, newStat.habit] })
+            })
 
         // containsObject(habit.name, userHabitNames)
-        setUser({ ...user, habitstats: [...user.habitstats, newHabitStat] })
+
 
     }
 
@@ -69,18 +88,18 @@ const HabitsCard = ({ habit, addStat }) => {
     //     }
     // }
 
-    const userHabits = user.habits
-    console.log(userHabits)
+    const userHabits = user ? user.habits : []
+
     // const uniqueHabits = [...new Map(habits.map((h) => [h.name, h])).values()];
     const userHabitNames = userHabits.map((h) => h.name)
     // console.log(userHabitNames)
 
     //*************************** */
 
-    function containsObject(obj, list) {
+    function containsObject(name, list) {
         var i;
         for (i = 0; i < list.length; i++) {
-            if (list[i] === obj) {
+            if (list[i] === name) {
                 return false;
             }
         }
@@ -99,6 +118,8 @@ const HabitsCard = ({ habit, addStat }) => {
         return <li key={u.id}>{u.username}</li>
     })
 
+    console.log("render number:", ++renderCount)
+
     return (
 
         <Box>
@@ -113,8 +134,7 @@ const HabitsCard = ({ habit, addStat }) => {
                     }}
                 >
                     <Typography gutterBottom variant="h5" component="div">
-                        {habit.name}
-                        <button onClick={handleAdd}>{containsObject(habit.name, userHabitNames) ? <AddCircleOutlineIcon sx={{ color: "#0096FF" }} /> : <FileDownloadDoneIcon sx={{ color: "#50C878" }} />}</button>
+                        {habit.name} <button onClick={handleAdd}>{containsObject(habit.name, userHabitNames) ? <AddCircleOutlineIcon sx={{ color: "#0096FF" }} /> : <FileDownloadDoneIcon sx={{ color: "#50C878" }} />}</button>
                         {/* <button onClick={handleAdd}><AddCircleOutlineIcon sx={{ color: "#0096FF" }} /></button> */}
                         {/* {containsObject(habit.name, userHabitNames) ? <AddButton handleAdd={handleAdd} /> : <CheckBtton />} */}
                     </Typography>

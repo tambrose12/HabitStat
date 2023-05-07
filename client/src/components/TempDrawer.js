@@ -17,6 +17,7 @@ import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Cookies from 'js-cookie';
+import { Toolbar } from '@mui/material';
 
 export default function TempDrawer() {
     const navigate = useNavigate()
@@ -110,7 +111,14 @@ export default function TempDrawer() {
         <div>
             {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
             <React.Fragment key='left'>
-                <Button onClick={toggleDrawer('left', true)} variant='outlined' sx={{ marginTop: 1.5 }}>MENU</Button>
+                <Toolbar color="primary" sx={{ display: "flex" }}>
+                    <Button onClick={toggleDrawer('left', true)} variant='contained' sx={{ marginTop: 1.5 }}>MENU</Button>
+                    <div id="header">
+                        <h1> HabitStat</h1>
+                    </div>
+
+                </Toolbar>
+
                 <Drawer
                     anchor='left'
                     open={state['left']}
