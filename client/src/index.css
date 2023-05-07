@@ -48,11 +48,34 @@ code {
 .habitList {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
+
+.habitListImgDiv {
+  display: flex;
+  justify-content: center;
+}
+
 
 .userImage {
   height: 100px;
   width: 100px;
+  justify-content: center;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.userImage2 {
+  height: 70px;
+  width: 70px;
+  justify-content: center;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.userImage3 {
+  height: 200px;
+  width: 200px;
   justify-content: center;
   object-fit: cover;
   border-radius: 50%;
@@ -63,4 +86,8 @@ code {
   align-items: center;
   text-align: center;
   justify-content: center;
+}
+
+.historyHeader {
+  margin-top: 50px;
 }

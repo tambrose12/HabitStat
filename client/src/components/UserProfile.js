@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "./context/user";
 import { Button } from "@mui/material";
 import TempDrawer from "./TempDrawer";
+import TextField from '@mui/material/TextField';
+import { Box } from '@mui/material';
 
 const UserProfile = () => {
     const { user, setUser } = useContext(UserContext)
@@ -36,19 +38,39 @@ const UserProfile = () => {
         <div>
             <TempDrawer />
             <div className="formDiv">
-                <img className="userImage" src={user.image} alt={user.username} />
+                <img className="userImage3" src={user.image} alt={user.username} />
                 <br />
+                <h2>Editable user information:
+                </h2>
                 <form onSubmit={handleSubmit} >
-                    <label for="username"> Username: </label>
                     <br />
-                    <input onChange={handleChange} type="text" name="username" value={username} />
+                    <TextField
+                        label='Username'
+                        variant='outlined'
+                        onChange={handleChange}
+                        name="username"
+                        id="username"
+                        type="text"
+                        value={username}
+                        sx={{ margin: 1 }}
+                    />
                     <br />
-                    <label for="image"> Enter Image URL: </label>
+                    <TextField
+                        label='Image URL'
+                        variant='outlined'
+                        onChange={handleChange}
+                        name="image"
+                        id="image"
+                        type="text"
+                        value={image}
+                        sx={{ margin: 1 }}
+                    />
                     <br />
-                    <input onChange={handleChange} type="text" name="image" value={image} />
-                    <br />
-                    <br />
-                    <Button variant='outlined' type="submit">Submit</Button>
+                    <Box textAlign='center'>
+                        <Button variant='contained' type="submit">Submit Changes</Button>
+                    </Box>
+
+
                 </form>
             </div>
         </div>

@@ -45,6 +45,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .mainDiv {
@@ -55,7 +56,25 @@
 }
 
 .chartDiv {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.chart {
+  /* display: flex; */
+  /* flex-direction: row; */
+  width: 75vw;
+}
+
+.modal {
+
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
 }

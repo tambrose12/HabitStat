@@ -10,6 +10,8 @@ import AddIcon from '@mui/icons-material/Add';
 import Modal from "react-modal";
 import { Button } from "@mui/material";
 import { StatsContext } from './context/stats';
+import TextField from '@mui/material/TextField';
+import { Box } from '@mui/material';
 
 
 const UserDash = ({ removeStat }) => {
@@ -89,7 +91,7 @@ const UserDash = ({ removeStat }) => {
 				})
 				setUser({ ...user, habitstats: updatedHabitStats })
 			})
-		window.alert("Progress Updated")
+		setModalOpen(false)
 
 
 	}
@@ -156,18 +158,29 @@ const UserDash = ({ removeStat }) => {
 						ariaHideApp={false}
 						isOpen={modalOpen}
 						onRequestClose={() => setModalOpen(false)}
+						size="xs"
 					>
 						<div className='Login'>
 							{/* onSubmit={addProgress} */}
 							<form onSubmit={handleSubmit}>
-								<label for="amount"> Enter Progress: </label>
+
+								<TextField
+									label='Edit Progress'
+									variant='outlined'
+									onChange={handleChange}
+									name="amount"
+									id="amount"
+									type="number"
+									value={thisStat.amount}
+									sx={{ margin: 1 }}
+								/>
 								<br />
-								<input onChange={handleChange} type="number" name="amount" min="number" value={thisStat.amount} />
-								<br />
-								<Button variant='outlined' sx={{ marginTop: 2 }} type="submit">Submit Progress</Button>
+								<Box textAlign="center">
+									<Button variant='contained' sx={{ marginTop: 2 }} type="submit">Submit Progress Change</Button>
+								</Box>
 							</form>
 							<br />
-							<Button variant='outlined' sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
+							<Button variant='contained' color="secondary" sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
 								Close Form
 							</Button>
 						</div>

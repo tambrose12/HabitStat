@@ -69,7 +69,7 @@ const Charts = () => {
     };
 
     return (
-        <div >
+        <div className="chart">
 
             <Line data={waterChartData} />
 
