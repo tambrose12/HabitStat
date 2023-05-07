@@ -35,6 +35,7 @@ code {
   margin-left: 15px;
   font-size: small;
   color: #0096FF;
+  cursor: pointer;
 }
 
 .deleteBtn {
@@ -43,6 +44,7 @@ code {
   margin-left: 15px;
   font-size: small;
   color: #b61b2a;
+  cursor: pointer;
 }
 
 .habitList {

@@ -104,7 +104,8 @@ const UserDash = ({ removeStat }) => {
 				<TableCell>{stat.habit.name}</TableCell>
 				<TableCell align="right">{stat.habit.category}</TableCell>
 				<TableCell align="right">{stat.habit.goal} </TableCell>
-				<TableCell align="right" value={stat.amount}>{stat.amount} <button className='addBtn' onClick={() => handleModalOpen(stat)}><AddIcon /></button></TableCell>
+				<TableCell align="right" value={stat.amount}>{stat.amount} </TableCell>
+				<TableCell> <button className='addBtn' onClick={() => handleModalOpen(stat)}><AddIcon /></button> </TableCell>
 			</TableRow>
 		)
 	})
@@ -146,6 +147,7 @@ const UserDash = ({ removeStat }) => {
 									<TableCell sx={{ fontWeight: 'bold' }} align="right">Category</TableCell>
 									<TableCell sx={{ fontWeight: 'bold' }} align="right">Goal</TableCell>
 									<TableCell sx={{ fontWeight: 'bold' }} align="right">Progress</TableCell>
+									<TableCell> </TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>

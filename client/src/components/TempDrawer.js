@@ -19,6 +19,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import InsightsIcon from '@mui/icons-material/Insights';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 export default function TempDrawer() {
     const navigate = useNavigate()
@@ -109,24 +111,19 @@ export default function TempDrawer() {
     );
 
 
-    // <AppBar position="relative">
-    //     <Toolbar>
-    //         <TempDrawer />
-    //         <Typography variant="h2" color="white" textAlign="center" noWrap>
-    //             HabitStat
-    //         </Typography>
-    //     </Toolbar>
-    // </AppBar>
+
+
+
     return (
         <div>
             {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
             <React.Fragment key='left'>
                 <AppBar position="static">
                     <Toolbar color="primary" sx={{ display: "flex", flexDirection: "row", justifyContent: "content-distribution" }}>
-                        <Button onClick={toggleDrawer('left', true)} variant='contained' sx={{ marginTop: 1.5 }}><MenuIcon /></Button>
+                        <Button onClick={toggleDrawer('left', true)} variant='contained' sx={{ marginTop: 1.5, marginRight: 5 }}><MenuIcon /></Button>
                         <br />
                         <div id="header">
-                            <h1> HabitStat</h1>
+                            <h1> HabitStat </h1><TrendingUpIcon fontSize='large' />
                         </div>
 
                     </Toolbar>
