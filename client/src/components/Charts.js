@@ -70,10 +70,10 @@ const Charts = () => {
 
     return (
         <div className="chart">
-
+            <h2>Water Intake Progress</h2>
             <Line data={waterChartData} />
 
-
+            <h2>Exercise and Meditation Progress</h2>
             <Line data={exerciseChartData} />
 
 

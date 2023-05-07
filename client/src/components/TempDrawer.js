@@ -16,8 +16,9 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Cookies from 'js-cookie';
+import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function TempDrawer() {
     const navigate = useNavigate()
@@ -107,18 +108,29 @@ export default function TempDrawer() {
         </Box>
     );
 
+
+    // <AppBar position="relative">
+    //     <Toolbar>
+    //         <TempDrawer />
+    //         <Typography variant="h2" color="white" textAlign="center" noWrap>
+    //             HabitStat
+    //         </Typography>
+    //     </Toolbar>
+    // </AppBar>
     return (
         <div>
             {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
             <React.Fragment key='left'>
-                <Toolbar color="primary" sx={{ display: "flex" }}>
-                    <Button onClick={toggleDrawer('left', true)} variant='contained' sx={{ marginTop: 1.5 }}>MENU</Button>
-                    <div id="header">
-                        <h1> HabitStat</h1>
-                    </div>
+                <AppBar position="static">
+                    <Toolbar color="primary" sx={{ display: "flex", flexDirection: "row", justifyContent: "content-distribution" }}>
+                        <Button onClick={toggleDrawer('left', true)} variant='contained' sx={{ marginTop: 1.5 }}><MenuIcon /></Button>
+                        <br />
+                        <div id="header">
+                            <h1> HabitStat</h1>
+                        </div>
 
-                </Toolbar>
-
+                    </Toolbar>
+                </AppBar>
                 <Drawer
                     anchor='left'
                     open={state['left']}

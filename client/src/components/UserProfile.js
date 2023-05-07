@@ -4,6 +4,9 @@ import { Button } from "@mui/material";
 import TempDrawer from "./TempDrawer";
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 const UserProfile = () => {
     const { user, setUser } = useContext(UserContext)
@@ -36,6 +39,7 @@ const UserProfile = () => {
 
     return (
         <div>
+
             <TempDrawer />
             <div className="formDiv">
                 <img className="userImage3" src={user.image} alt={user.username} />

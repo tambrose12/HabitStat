@@ -54,6 +54,7 @@ code {
 .habitListImgDiv {
   display: flex;
   justify-content: center;
+  margin: 20px;
 }
 
 
@@ -62,6 +63,7 @@ code {
   width: 100px;
   justify-content: center;
   object-fit: cover;
+  border: 1px solid black;
   border-radius: 50%;
 }
 
@@ -71,6 +73,7 @@ code {
   justify-content: center;
   object-fit: cover;
   border-radius: 50%;
+  border: 1px solid black;
 }
 
 .userImage3 {
@@ -79,6 +82,7 @@ code {
   justify-content: center;
   object-fit: cover;
   border-radius: 50%;
+  border: 1px solid black;
 }
 
 #header {

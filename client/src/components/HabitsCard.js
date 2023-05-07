@@ -4,27 +4,12 @@ import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 
-let renderCount = 0
-
-
-
-const AddButton = (handleAdd) => {
-
-    return (
-        <button onClick={handleAdd}>
-            <AddCircleOutlineIcon sx={{ color: "#0096FF" }} />
-        </button>
-    )
-}
-
-const CheckBtton = () => {
-    return (
-        <button>
-            <FileDownloadDoneIcon sx={{ color: "#50C878" }} />
-        </button>
-    )
-}
 
 
 const HabitsCard = ({ habit, addStat }) => {
@@ -74,19 +59,6 @@ const HabitsCard = ({ habit, addStat }) => {
 
     }
 
-    // const handleClick = (habit) => {
-    //     addStat(stat)
-    // }
-
-    // const renderUnits = () => {
-    //     if (habit.name == "Water Intake") {
-    //         return <p>cups</p>
-    //     } else if (habit.name == "Take a Shower") {
-    //         return ''
-    //     } else {
-    //         return <p>minutes</p>
-    //     }
-    // }
 
     const userHabits = user ? user.habits : []
 
@@ -114,11 +86,20 @@ const HabitsCard = ({ habit, addStat }) => {
 
     const uniqueUsers = [...new Map(habit.users.map((u) => [u.username, u])).values()];
 
+
+    // const habitUsers = uniqueUsers.map((u) => {
+    //     return <li key={u.id}>{u.username}</li>
+    // }) 
+
+
     const habitUsers = uniqueUsers.map((u) => {
-        return <li key={u.id}>{u.username}</li>
+        return (
+            <ListItem key={u.id} sx={{ margin: 0, color: "#2C7DA0" }}>
+                <ListItemText primary={u.username} />
+            </ListItem>
+        )
     })
 
-    console.log("render number:", ++renderCount)
 
     return (
 
@@ -141,8 +122,14 @@ const HabitsCard = ({ habit, addStat }) => {
                     <Typography variant="body2" color="text.secondary">
                         Category: {habit.category} <br />
                         Goal: {habit.goal} <br />
-                        Users Following This Goal: <ul>{habitUsers}</ul>
+
                     </Typography>
+                    <Typography variant="body2" sx={{ color: "#2C7DA0" }}>
+                        Users Following This Goal:
+                    </Typography>
+                    <List dense="dense" sx={{ display: "flex", }}>
+                        {habitUsers}
+                    </List>
                 </CardContent>
             </Card>
         </Box>
