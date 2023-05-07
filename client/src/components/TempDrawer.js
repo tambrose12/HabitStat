@@ -31,6 +31,7 @@ export default function TempDrawer() {
     //   )
 
     function handleLogout() {
+        navigate("/")
         fetch("/logout", {
             method: "DELETE",
         }).then(() => {
