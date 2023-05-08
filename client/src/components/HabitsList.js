@@ -1,18 +1,31 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "./context/user";
 import TempDrawer from "./TempDrawer"
 
 
 
 const HabitsList = ({ habitCard }) => {
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
+
+    useEffect(() => {
+        if (!user) {
+            fetch("/check_session")
+                .then((response) => {
+                    if (response.ok) {
+                        response.json().then((user) => setUser(user))
+                    }
+                })
+        }
+    }, [])
+
+    const renderImage = user ? <img className="userImage2" src={user.image} alt={user.username} /> : ""
 
     return (
         <div >
             <TempDrawer />
 
             <div className="habitListImgDiv">
-                <img className="userImage2" src={user.image} alt={user.username} />
+                {renderImage}
             </div>
             <div className="habitList">
 

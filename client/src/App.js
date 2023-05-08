@@ -10,6 +10,7 @@ import HabitsCard from './components/HabitsCard'
 import HabitsList from './components/HabitsList'
 import UserProfile from './components/UserProfile';
 import StatsPage from './components/StatsPage';
+import UserDash from './components/UserDash';
 
 
 
@@ -64,12 +65,20 @@ function App() {
 
   let habitCard = habits.map(habit => <HabitsCard key={habit.id} habit={habit} addStat={addStatToState} />)
 
+  if (!user) return (
+    <div>
+      <Routes>
+        <Route index element={<Root onLogout={handleLogout} user={user} />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </div>
+  )
 
   return (
     <div>
-
       <Routes>
         <Route index element={<Root onLogout={handleLogout} user={user} />} />
+        <Route path='/userdash' element={<UserDash />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<UserProfile />} />

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "./context/user";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import { Box } from "@mui/material";
+
 
 const Charts = () => {
 
@@ -12,7 +12,7 @@ const Charts = () => {
     const exerciseData = {};
     const meditationData = {};
     for (const entry of user.history) {
-        console.log(entry)
+
         if (entry.habit.name == "Water Intake") {
             const date = new Date(entry.created_at).toLocaleDateString();
             if (!waterData[date]) {

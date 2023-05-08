@@ -70,10 +70,12 @@ const StatsPage = ({ }) => {
         )
     })
 
+
     return (
         <div>
             <TempDrawer />
             <div className="chartDiv">
+                {/* {renderUserHeader} */}
                 <h2>{user.username}'s Stats</h2>
                 <img className="userImage2" src={user.image} alt={user.username} />
                 <br />

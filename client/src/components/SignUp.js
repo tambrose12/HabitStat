@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import TextField from '@mui/material/TextField';
@@ -7,9 +7,11 @@ import NavButton from "./NavButton";
 import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { UserContext } from "./context/user";
 
 
 function SignUp({ }) {
+    const { user, setUser } = useContext(UserContext)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -44,9 +46,11 @@ function SignUp({ }) {
             }),
         })
             .then(handleErrors)
-            .then(setIsLoading(false))
+            .then(user => {
+                setUser(user)
+            })
 
-        navigate('/userdash')
+        navigate('/')
     }
 
 

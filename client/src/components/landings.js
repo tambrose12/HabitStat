@@ -1,13 +1,29 @@
 import NavButton from './NavButton'
+import React, { useContext, useState, useEffect } from "react";
 import Login from './Login'
+import { UserContext } from "./context/user";
 import UserDash from './UserDash'
 import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 
-export const Root = ({ user, removeStat }) => {
+export const Root = ({ }) => {
+    const { user, setUser } = useContext(UserContext)
+
+    useEffect(() => {
+        if (!user) {
+            fetch("/check_session")
+                .then((response) => {
+                    if (response.ok) {
+                        response.json().then((user) => setUser(user))
+                    }
+                })
+        }
+    }, [])
+
     if (!user) {
+
         return (
             <>
                 <AppBar position="static">
@@ -27,7 +43,7 @@ export const Root = ({ user, removeStat }) => {
     else if (user) {
         return (
             <>
-                <UserDash removeStat={removeStat} />
+                <UserDash />
             </>
         )
     }

@@ -78,7 +78,8 @@ class Signup(Resource):
 
         user = User(
             username=username,
-            image='https://images.unsplash.com/photo-1601247387431-7966d811f30b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80'
+            # image='https://images.unsplash.com/photo-1601247387431-7966d811f30b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80'
+            image="https://images.unsplash.com/photo-1561493642-b808bc5a81de?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80"
         )
         # Photo by Joshua J. Cotten on Unsplash
 
@@ -90,6 +91,10 @@ class Signup(Resource):
             db.session.commit()
 
             session['user_id'] = user.id
+
+            firstHabitStat = HabitStat(user_id=user.id, habit_id=1, amount=0)
+            db.session.add(firstHabitStat)
+            db.session.commit()
 
             return user.to_dict(), 201
 
