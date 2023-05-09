@@ -51,12 +51,10 @@ function App() {
     setStats([...stats, newStat])
   }
 
-  const removeStatFromState = (deletedStatId => {
-    setStats(stats => stats.filter(stat => {
-      return stat.id != deletedStatId
-    }))
-  })
 
+  const addHabitToState = (newHabit) => {
+    setHabits([...habits, newHabit])
+  }
 
 
   function handleLogout() {
@@ -82,7 +80,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<UserProfile />} />
-        <Route path="/habits" element={<HabitsList habitCard={habitCard} />} />
+        <Route path="/habits" element={<HabitsList habitCard={habitCard} addHabitToState={addHabitToState} />} />
         <Route path="/userstats" element={<StatsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

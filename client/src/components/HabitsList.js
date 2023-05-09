@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "./context/user";
 import TempDrawer from "./TempDrawer"
+import AddNewHabit from "./AddNewHabit";
 
 
 
-const HabitsList = ({ habitCard }) => {
+const HabitsList = ({ habitCard, addHabitToState }) => {
     const { user, setUser } = useContext(UserContext)
 
     useEffect(() => {
@@ -27,10 +28,12 @@ const HabitsList = ({ habitCard }) => {
             <div className="habitListImgDiv">
                 {renderImage}
             </div>
+            <h3 className="habitsHeader">Suggested Habits</h3>
             <div className="habitList">
 
                 {habitCard}
             </div>
+            <AddNewHabit addHabitToState={addHabitToState} />
         </div>
     )
 

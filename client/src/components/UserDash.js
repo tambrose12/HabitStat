@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "./context/user";
 import TempDrawer from "./TempDrawer";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import { StatsContext } from './context/stats';
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 
 
@@ -18,9 +19,30 @@ const UserDash = ({ }) => {
 	const { stats, setStats } = useContext(StatsContext)
 	const [modalOpen, setModalOpen] = useState(false);
 	const [thisStat, setThisStat] = useState('')
+	// const [quotes, setQuotes] = useState([])
+	// const [randomQuote, setRandomQuote] = useState('')
 
 
 	let habitStats = user.habitstats
+
+	// useEffect(() => {
+	// 	fetch("https://type.fit/api/quotes")
+	// 		.then(function (response) {
+	// 			return response.json();
+	// 		})
+	// 		.then(function (data) {
+	// 			setQuotes(data);
+	// 		})
+	// }, [])
+
+
+	// const randomizeQuotes = (array) => {
+	// 	return array[Math.floor(Math.random() * array.length)]
+	// }
+
+	// let randomQuote = randomizeQuotes(quotes)
+	// console.log(randomizeQuotes(quotes).text)
+	// setRandomQuote(randomizeQuotes(quotes))
 
 	const removeStatfromState = (deleteStatId) => {
 		setStats(stats => stats.filter(stat => {
@@ -137,10 +159,36 @@ const UserDash = ({ }) => {
 			<div>
 				<TempDrawer />
 				<div className="mainDiv">
+					{/* <div className="topDiv"> */}
+					{/* <div className="topLeft"> */}
 					<h2>Hello, {user.username}!</h2>
 					<img className="userImage" src={user.image} alt={user.username} />
 					<p>Welcome to your Dashboard!</p>
 					<p>Click the Menu to find the option to add habits to your list of goals.</p>
+					{/* </div> */}
+					{/* <div className="topRight">
+							<Box>
+								<Card sx={{ maxWidth: 350, minWidth: 350, padding: 5, margin: 2, maxHeight: 200, }} >
+									<CardContent
+										sx={{
+											"@media screen and (max-width: 800px)": {
+												paddingBottom: "20px",
+												display: "flex"
+
+											},
+										}}
+									>
+										<Typography gutterBottom variant="h6" component="div">
+											{/* {randomQuote.text} */}
+					{/* </Typography>
+										<Typography variant="body2" color="text.secondary">
+											{/* -{randomQuote.author} */}
+					{/* </Typography>
+									</CardContent>
+								</Card>
+							</Box>
+						</div> */}
+					{/* </div> */}
 					<h3>Your Habit Goals:</h3>
 					<br />
 					<TableContainer sx={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
@@ -152,7 +200,7 @@ const UserDash = ({ }) => {
 									<TableCell sx={{ fontWeight: 'bold' }} align="right">Category</TableCell>
 									<TableCell sx={{ fontWeight: 'bold' }} align="right">Goal</TableCell>
 									<TableCell sx={{ fontWeight: 'bold' }} align="right">Progress</TableCell>
-									<TableCell> </TableCell>
+									<TableCell sx={{ fontWeight: 'bold' }}> Add Progress</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -168,7 +216,7 @@ const UserDash = ({ }) => {
 						size="xs"
 					>
 						<div className='Login'>
-							{/* onSubmit={addProgress} */}
+
 							<form onSubmit={handleSubmit}>
 
 								<TextField
