@@ -4,11 +4,12 @@ import Charts from "./Charts";
 import TempDrawer from "./TempDrawer";
 import { TableContainer, Table, TableBody, TableRow, TableHead, TableCell } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import Modal from "react-modal"
+// import Modal from "react-modal"
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
+import Modal from '@mui/material/Modal';
 
 const StatsPage = ({ }) => {
     const { user, setUser } = useContext(UserContext)
@@ -102,11 +103,10 @@ const StatsPage = ({ }) => {
                 </TableContainer>
                 <br />
                 <Modal
+                    bgcolor='background.default'
                     ariaHideApp={false}
-                    isOpen={modalOpen}
+                    open={modalOpen}
                     onRequestClose={() => setModalOpen(false)}
-                    size="xs"
-                    className='modal'
                 >
                     <Box className='modal'>
                         <form onSubmit={handleSubmit}>

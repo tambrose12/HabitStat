@@ -5,12 +5,13 @@ import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { TableContainer, Table, TableBody, TableRow, TableHead, TableCell } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import Modal from "react-modal";
+// import Modal from "react-modal";
 import { Button } from "@mui/material";
 import { StatsContext } from './context/stats';
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
+import Modal from '@mui/material/Modal';
 
 
 
@@ -161,7 +162,7 @@ const UserDash = ({ }) => {
 				<Box className="mainDiv" bgcolor='background.default'>
 					{/* <div className="topDiv"> */}
 					{/* <div className="topLeft"> */}
-					<Typography variant="h5" color='text.primary' margin='20px'> Hello, {user.username}! </Typography>
+					<Typography variant="h4" color='text.primary' margin='20px'> Hello, {user.username}! </Typography>
 					<img className="userImage" src={user.image} alt={user.username} />
 					<Typography variant="p" color='text.primary' margin='20px'> Welcome to your Dashboard! </Typography>
 					<Typography variant="p" color='text.primary' margin='20px'> Click the Menu to find the option to add habits to your list of goals. </Typography>
@@ -192,7 +193,7 @@ const UserDash = ({ }) => {
 					<Typography variant="h5" color='text.primary' marginTop='20px'> Your Habit Goals: </Typography>
 					<br />
 					<TableContainer sx={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
-						<Table sx={{ maxWidth: 900, justifyContent: "center", textAlign: "center" }} size="small" aria-label="a dense table">
+						<Table sx={{ maxWidth: 1000, justifyContent: "center", textAlign: "center" }} size="small" aria-label="a dense table">
 							<TableHead>
 								<TableRow>
 									<TableCell sx={{ maxWidth: 10 }}> </TableCell>
@@ -210,12 +211,13 @@ const UserDash = ({ }) => {
 					</TableContainer>
 					<br />
 					<Modal
+						bgcolor='background.default'
 						ariaHideApp={false}
-						isOpen={modalOpen}
+						open={modalOpen}
 						onRequestClose={() => setModalOpen(false)}
-						size="xs"
+
 					>
-						<div className='Login'>
+						<Box className='Login'>
 
 							<form onSubmit={handleSubmit}>
 
@@ -238,7 +240,7 @@ const UserDash = ({ }) => {
 							<Button variant='contained' color="secondary" sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
 								Close Form
 							</Button>
-						</div>
+						</Box>
 					</Modal>
 
 

@@ -8,6 +8,7 @@ import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { UserContext } from "./context/user";
+import { Typography } from "@mui/material";
 
 
 function SignUp({ }) {
@@ -55,20 +56,20 @@ function SignUp({ }) {
 
 
     return (
-        <div>
+        <Box>
             <AppBar position="static">
                 <Toolbar color="primary" sx={{ display: "flex", flexDirection: "row", justifyContent: "content-distribution" }}>
 
-                    <div id="header">
+                    <Box id="header">
                         <h1> HabitStat </h1><TrendingUpIcon fontSize='large' />
-                    </div>
+                    </Box>
 
                 </Toolbar>
             </AppBar>
-            <div className='Login'>
+            <Box className='Login' bgcolor='background.default' height="100vh">
+                <Typography variant="h4" color='text.primary' margin='20px'> Welcome to HabitStat! </Typography>
+                <Typography variant="h5" color='text.primary' margin='20px'>Create An Account</Typography>
 
-                <h1>Welcome to HabitStat!</h1>
-                <h2>Create An Account</h2>
                 <form onSubmit={handleSubmit}>
                     <TextField
                         label="Username"
@@ -108,8 +109,8 @@ function SignUp({ }) {
                     <NavButton text="Back to LogIn" />
                 </Box>
 
-            </div>
-        </div>
+            </Box>
+        </Box>
 
     );
 }
