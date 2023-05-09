@@ -8,6 +8,7 @@ import Modal from "react-modal"
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
 import { Button } from "@mui/material";
+import { Typography } from "@mui/material";
 
 const StatsPage = ({ }) => {
     const { user, setUser } = useContext(UserContext)
@@ -72,17 +73,16 @@ const StatsPage = ({ }) => {
 
 
     return (
-        <div>
+        <Box bgcolor='background.default' >
             <TempDrawer />
-            <div className="chartDiv">
-                {/* {renderUserHeader} */}
-                <h2>{user.username}'s Stats</h2>
+            <Box className="chartDiv">
+                <Typography variant="h5" color='text.primary' margin='20px'> {user.username}'s Stats </Typography>
+
                 <img className="userImage2" src={user.image} alt={user.username} />
                 <br />
-                {/* <UserDataGrid setStats={setStats} /> */}
                 <Charts />
                 <br />
-                <h2 className="historyHeader">Your HabitStat History</h2>
+                <Typography variant="h5" color='text.primary' margin='20px'> Your HabitStat History</Typography>
                 <br />
                 <TableContainer sx={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
                     <Table sx={{ maxWidth: 900, justifyContent: "center", textAlign: "center" }} size="small" aria-label="a dense table">
@@ -108,8 +108,7 @@ const StatsPage = ({ }) => {
                     size="xs"
                     className='modal'
                 >
-                    <div className='modal'>
-                        {/* onSubmit={addProgress} */}
+                    <Box className='modal'>
                         <form onSubmit={handleSubmit}>
 
                             <TextField
@@ -131,12 +130,12 @@ const StatsPage = ({ }) => {
                         <Button variant='contained' color="secondary" sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
                             Close Form
                         </Button>
-                    </div>
+                    </Box>
                 </Modal>
 
 
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 
 }

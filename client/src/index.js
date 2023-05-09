@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './components/context/user';
 import { StatsProvider } from './components/context/stats';
+import { DarkThemeProvider } from './components/context/theme';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<BrowserRouter>
 		<UserProvider>
-			<StatsProvider>
-				<App />
-			</StatsProvider>
+			<DarkThemeProvider>
+				<StatsProvider>
+					<App />
+				</StatsProvider>
+			</DarkThemeProvider>
 		</UserProvider>
 	</BrowserRouter>
 );

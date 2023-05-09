@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "./context/user";
 import TempDrawer from "./TempDrawer"
 import AddNewHabit from "./AddNewHabit";
+import { Box } from '@mui/material';
+import { Typography } from "@mui/material"
 
 
 
@@ -22,19 +24,19 @@ const HabitsList = ({ habitCard, addHabitToState }) => {
     const renderImage = user ? <img className="userImage2" src={user.image} alt={user.username} /> : ""
 
     return (
-        <div >
+        <Box bgcolor='background.default' >
             <TempDrawer />
 
-            <div className="habitListImgDiv">
+            <Box margin='25px' className="habitListImgDiv">
                 {renderImage}
-            </div>
-            <h3 className="habitsHeader">Suggested Habits</h3>
-            <div className="habitList">
+            </Box>
+            <Typography variant="h5" color='text.primary' margin='20px' textAlign='center'> Suggested Habits </Typography>
+            <Box className="habitList">
 
                 {habitCard}
-            </div>
+            </Box>
             <AddNewHabit addHabitToState={addHabitToState} />
-        </div>
+        </Box >
     )
 
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UserContext } from "./context/user";
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
@@ -20,14 +20,18 @@ import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { ColorModeContext } from './context/theme';
+import CircleIcon from '@mui/icons-material/Circle';
 
 export default function TempDrawer() {
     const navigate = useNavigate()
     const { user, setUser } = useContext(UserContext)
 
-    // let removing = browser.cookies.remove(
-    //     {}
-    //   )
+    const colorMode = useContext(ColorModeContext);
+
 
     function handleLogout() {
         navigate("/")
@@ -35,7 +39,6 @@ export default function TempDrawer() {
             method: "DELETE",
         }).then(() => {
             setUser(null)
-            // document.cookie.remove('session')
         });
 
     }
@@ -106,6 +109,14 @@ export default function TempDrawer() {
                         <ListItemText primary='Log Out' />
                     </ListItemButton>
                 </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={colorMode.toggleColorMode} color="inherit">
+                        <ListItemIcon>
+                            <CircleIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Dark/Light Mode' />
+                    </ListItemButton>
+                </ListItem>
             </List>
         </Box>
     );
@@ -120,7 +131,7 @@ export default function TempDrawer() {
             <React.Fragment key='left'>
                 <AppBar position="static">
                     <Toolbar color="primary" sx={{ display: "flex", flexDirection: "row", justifyContent: "content-distribution" }}>
-                        <Button onClick={toggleDrawer('left', true)} variant='contained' sx={{ marginTop: 1.5, marginRight: 5 }}><MenuIcon /></Button>
+                        <Button onClick={toggleDrawer('left', true)} variant='contained' bgcolor='background.default' sx={{ marginTop: 1.5, marginRight: 5 }}><MenuIcon /></Button>
                         <br />
                         <div id="header">
                             <h1> HabitStat </h1><TrendingUpIcon fontSize='large' />

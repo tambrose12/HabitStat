@@ -156,15 +156,15 @@ const UserDash = ({ }) => {
 		)
 	} else {
 		return (
-			<div>
+			<Box bgcolor='background.default' height="100vh">
 				<TempDrawer />
-				<div className="mainDiv">
+				<Box className="mainDiv" bgcolor='background.default'>
 					{/* <div className="topDiv"> */}
 					{/* <div className="topLeft"> */}
-					<h2>Hello, {user.username}!</h2>
+					<Typography variant="h5" color='text.primary' margin='20px'> Hello, {user.username}! </Typography>
 					<img className="userImage" src={user.image} alt={user.username} />
-					<p>Welcome to your Dashboard!</p>
-					<p>Click the Menu to find the option to add habits to your list of goals.</p>
+					<Typography variant="p" color='text.primary' margin='20px'> Welcome to your Dashboard! </Typography>
+					<Typography variant="p" color='text.primary' margin='20px'> Click the Menu to find the option to add habits to your list of goals. </Typography>
 					{/* </div> */}
 					{/* <div className="topRight">
 							<Box>
@@ -189,7 +189,7 @@ const UserDash = ({ }) => {
 							</Box>
 						</div> */}
 					{/* </div> */}
-					<h3>Your Habit Goals:</h3>
+					<Typography variant="h5" color='text.primary' marginTop='20px'> Your Habit Goals: </Typography>
 					<br />
 					<TableContainer sx={{ display: "grid", justifyContent: "center", textAlign: "center" }}>
 						<Table sx={{ maxWidth: 900, justifyContent: "center", textAlign: "center" }} size="small" aria-label="a dense table">
@@ -242,8 +242,8 @@ const UserDash = ({ }) => {
 					</Modal>
 
 
-				</div>
-			</div>
+				</Box>
+			</Box>
 		);
 	}
 

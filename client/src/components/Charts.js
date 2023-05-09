@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { UserContext } from "./context/user";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import { Box } from '@mui/material';
+import { Typography } from "@mui/material";
 
 
 const Charts = () => {
@@ -69,15 +71,15 @@ const Charts = () => {
     };
 
     return (
-        <div className="chart">
-            <h2>Water Intake Progress</h2>
+        <Box className="chart">
+            <Typography variant="h5" color='text.primary' margin='20px'> Water Intake Progress </Typography>
             <Line data={waterChartData} />
 
-            <h2>Exercise and Meditation Progress</h2>
+            <Typography variant="h5" color='text.primary' margin='20px'> Exercise and Meditation Progress </Typography>
             <Line data={exerciseChartData} />
 
 
-        </div>
+        </Box>
     )
 
 }

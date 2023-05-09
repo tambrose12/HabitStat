@@ -38,14 +38,13 @@ const UserProfile = () => {
     }
 
     return (
-        <div>
+        <Box bgcolor='background.default' height="100vh">
 
             <TempDrawer />
-            <div className="formDiv">
+            <Box className="formDiv">
                 <img className="userImage3" src={user.image} alt={user.username} />
                 <br />
-                <h2>Editable user information:
-                </h2>
+                <Typography variant="h5" color='text.primary'>Edit Your Information:</Typography>
                 <form onSubmit={handleSubmit} >
                     <br />
                     <TextField
@@ -76,8 +75,8 @@ const UserProfile = () => {
 
 
                 </form>
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 
 }

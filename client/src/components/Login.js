@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { Typography } from "@mui/material";
 
 
 
@@ -30,7 +31,6 @@ const Login = ({ }) => {
             .then((r) => {
                 if (r.ok) {
                     r.json().then((user) => setUser(user))
-                    // Cookies.set('user', user.id, { expires: 7 })
 
                 } else {
                     r.json().then((err) => console.log(err));
@@ -50,9 +50,9 @@ const Login = ({ }) => {
     }
 
     return (
-        <div className='Login'>
-            <h1>Welcome to HabitStat!</h1>
-            <h2>LogIn</h2>
+        <Box className='Login' bgcolor='background.default' height="100vh">
+            <Typography variant="h4" color='text.primary' margin='20px'> Welcome to HabitStat! </Typography>
+            <Typography variant="h5" color='text.primary' margin='20px'> LogIn </Typography>
             <form onSubmit={handleSubmit}>
                 <TextField
                     label='Username'
@@ -84,10 +84,10 @@ const Login = ({ }) => {
 
             </form>
             <br />
-            <h2>New to Habitstat?</h2>
-            <h2>Create an Account for Free!</h2>
+            <Typography variant="h5" color='text.primary' margin='20px'> New to HabitStat? </Typography>
+            <Typography variant="h5" color='text.primary' margin='20px'> Create an Account for Free </Typography>
             <Button variant='contained' color='success' onClick={handleSignUpClick} >Sign Up</Button>
-        </div>
+        </Box>
     )
 }
 

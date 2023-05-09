@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import { Typography } from "@mui/material";
 
 
 
@@ -47,9 +48,9 @@ function AddNewHabit({ addHabitToState }) {
 
 
     return (
-        <div className="Login">
-            <h3>Don't see what you are looking for?</h3>
-            <h3>Add a New Habit</h3>
+        <Box className="Login">
+            <Typography variant="h6" color='text.primary' margin='20px'>Don't see what you are looking for?</Typography>
+            <Typography variant="h6" color='text.primary' margin='20px'>Add a New Habit</Typography>
             <form onSubmit={handleSubmit}>
                 <TextField
                     label='Habit Name'
@@ -102,7 +103,7 @@ function AddNewHabit({ addHabitToState }) {
                     <Button variant='contained' type='submit'>Submit New Habit</Button>
                 </Box>
             </form>
-        </div>
+        </Box>
     )
 
 }

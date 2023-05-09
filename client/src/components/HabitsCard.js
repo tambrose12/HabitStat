@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/user";
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
+import { Card, CardMedia, CardContent, Typography, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -15,7 +15,7 @@ const HabitsCard = ({ habit, addStat }) => {
 
     const { user, setUser } = useContext(UserContext)
 
-    console.log(user)
+
 
     const [newAmount, setNewAmount] = useState(0)
     const [newUserId, setNewUserId] = useState(user ? user.id : 1)
@@ -53,7 +53,6 @@ const HabitsCard = ({ habit, addStat }) => {
                 setUser({ ...user, habitstats: [...user.habitstats, newStat], habits: [...user.habits, newStat.habit] })
             })
 
-        // containsObject(habit.name, userHabitNames)
 
 
     }
@@ -63,9 +62,7 @@ const HabitsCard = ({ habit, addStat }) => {
 
     // const uniqueHabits = [...new Map(habits.map((h) => [h.name, h])).values()];
     const userHabitNames = userHabits.map((h) => h.name)
-    // console.log(userHabitNames)
 
-    //*************************** */
 
     function containsObject(name, list) {
         var i;
@@ -79,16 +76,9 @@ const HabitsCard = ({ habit, addStat }) => {
     }
 
 
-    // Old Ternary logic
-    // containsObject(habit.name, userHabitNames)
 
 
     const uniqueUsers = [...new Map(habit.users.map((u) => [u.username, u])).values()];
-
-
-    // const habitUsers = uniqueUsers.map((u) => {
-    //     return <li key={u.id}>{u.username}</li>
-    // }) 
 
 
     const habitUsers = uniqueUsers.map((u) => {
@@ -114,9 +104,7 @@ const HabitsCard = ({ habit, addStat }) => {
                     }}
                 >
                     <Typography gutterBottom variant="h5" component="div">
-                        {habit.name} <button onClick={handleAdd}>{containsObject(habit.name, userHabitNames) ? <AddCircleOutlineIcon sx={{ color: "#0096FF" }} /> : <FileDownloadDoneIcon sx={{ color: "#50C878" }} />}</button>
-                        {/* <button onClick={handleAdd}><AddCircleOutlineIcon sx={{ color: "#0096FF" }} /></button> */}
-                        {/* {containsObject(habit.name, userHabitNames) ? <AddButton handleAdd={handleAdd} /> : <CheckBtton />} */}
+                        {habit.name} <Button onClick={handleAdd}>{containsObject(habit.name, userHabitNames) ? <AddCircleOutlineIcon sx={{ color: "#0096FF" }} /> : <FileDownloadDoneIcon sx={{ color: "#50C878" }} />}</Button>
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         Category: {habit.category} <br />
