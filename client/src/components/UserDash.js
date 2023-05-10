@@ -124,6 +124,23 @@ const UserDash = ({ }) => {
 
 	}
 
+	const style = {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		width: 400,
+		height: 400,
+		bgcolor: 'background.default',
+		border: '2px solid #000',
+		boxShadow: 24,
+		p: 4,
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		textAlign: 'center'
+	};
+
 	const tableRows = habitStats.map((stat) => {
 
 		return (
@@ -210,42 +227,47 @@ const UserDash = ({ }) => {
 						</Table>
 					</TableContainer>
 					<br />
-					<Modal
-						bgcolor='background.default'
-						ariaHideApp={false}
-						open={modalOpen}
-						onRequestClose={() => setModalOpen(false)}
+					<Box bgcolor='background.default' justifyContent='center'>
+						<Modal
+							bgcolor='background.default'
+							ariaHideApp={false}
+							open={modalOpen}
+							onRequestClose={() => setModalOpen(false)}
 
-					>
-						<Box className='Login'>
+						>
+							<Box sx={style}>
+								<Typography variant="h5" color='text.primary' margin='20px'> Edit Habit Progress: </Typography>
+								<form onSubmit={handleSubmit} sx={{ justifyContent: 'center' }}>
 
-							<form onSubmit={handleSubmit}>
-
-								<TextField
-									label='Edit Progress'
-									variant='outlined'
-									onChange={handleChange}
-									name="amount"
-									id="amount"
-									type="number"
-									value={thisStat.amount}
-									sx={{ margin: 1 }}
-								/>
+									<TextField
+										label='Edit Progress'
+										variant='outlined'
+										onChange={handleChange}
+										name="amount"
+										id="amount"
+										type="number"
+										value={thisStat.amount}
+										sx={{ margin: 1, textAlign: 'center' }}
+									/>
+									<br />
+									<Box textAlign="center">
+										<Button variant='contained' sx={{ marginTop: 2 }} type="submit">Submit Progress Change</Button>
+									</Box>
+								</form>
 								<br />
-								<Box textAlign="center">
-									<Button variant='contained' sx={{ marginTop: 2 }} type="submit">Submit Progress Change</Button>
+								<Box >
+									<Button variant='contained' color="secondary" sx={{ marginTop: 10, maxWidth: 300, textAlign: 'center' }} onClick={() => setModalOpen(false)} >
+										Close Form
+									</Button>
 								</Box>
-							</form>
-							<br />
-							<Button variant='contained' color="secondary" sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
-								Close Form
-							</Button>
-						</Box>
-					</Modal>
+
+							</Box>
+						</Modal>
+					</Box>
 
 
-				</Box>
-			</Box>
+				</Box >
+			</Box >
 		);
 	}
 

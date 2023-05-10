@@ -34,24 +34,30 @@ function SignUp({ }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        setIsLoading(true);
-        fetch("/signup", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                password,
-                password_confirmation: passwordConfirmation,
-            }),
-        })
-            .then(handleErrors)
-            .then(user => {
-                setUser(user)
-            })
 
-        navigate('/')
+        if (password === passwordConfirmation) {
+            setIsLoading(true);
+            fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                    password_confirmation: passwordConfirmation,
+                }),
+            })
+                .then(handleErrors)
+                .then(user => {
+                    setUser(user)
+                })
+
+            navigate('/')
+        } else {
+            window.alert("Password and Password Confirmation Must Match")
+        }
+
     }
 
 

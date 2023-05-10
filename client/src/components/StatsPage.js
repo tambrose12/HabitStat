@@ -73,6 +73,23 @@ const StatsPage = ({ }) => {
     })
 
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        height: 400,
+        bgcolor: 'background.default',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        textAlign: 'center'
+    };
+
     return (
         <Box bgcolor='background.default' >
             <TempDrawer />
@@ -108,7 +125,8 @@ const StatsPage = ({ }) => {
                     open={modalOpen}
                     onRequestClose={() => setModalOpen(false)}
                 >
-                    <Box className='modal'>
+                    <Box sx={style}>
+                        <Typography variant="h5" color='text.primary' margin='20px'> Edit Habit Progress: </Typography>
                         <form onSubmit={handleSubmit}>
 
                             <TextField
@@ -127,9 +145,12 @@ const StatsPage = ({ }) => {
                             </Box>
                         </form>
                         <br />
-                        <Button variant='contained' color="secondary" sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
-                            Close Form
-                        </Button>
+                        <Box>
+                            <Button variant='contained' color="secondary" sx={{ marginTop: 10 }} onClick={() => setModalOpen(false)} >
+                                Close Form
+                            </Button>
+                        </Box>
+
                     </Box>
                 </Modal>
 
